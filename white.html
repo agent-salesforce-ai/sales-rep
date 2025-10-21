@@ -11,16 +11,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Light Theme (Default) */
         body {
             font-family: 'Inter', sans-serif;
-            background: #ffffff;
+            /* Dawn gradient background */
+            background-color: #f0f9ff; /* Fallback */
+            background: linear-gradient(180deg, 
+                #e0f2fe 0%,  /* Light sky blue */
+                #fce7f3 35%, /* Soft pink */
+                #fff7ed 65%, /* Pale orange */
+                #f0f9ff 100% /* Light sky blue */
+            );
             position: relative;
-            color: #334155; /* slate-700 */
+            min-height: 100vh;
+        }
+
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -10;
+            pointer-events: none;
         }
 
         .gradient-text {
-            background: linear-gradient(90deg, #14b8a6, #3b82f6, #8b5cf6);
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-text-dark {
+             background: linear-gradient(90deg, #1e293b, #475569);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -31,7 +53,7 @@
 
         .cta-button {
             transition: all 0.3s ease;
-            box-shadow: 0px 4px 20px rgba(59, 130, 246, 0.3);
+            box-shadow: 0px 4px 20px rgba(45, 212, 191, 0.4);
         }
 
         .cta-button:hover {
@@ -39,172 +61,154 @@
             box-shadow: 0px 8px 30px rgba(59, 130, 246, 0.4);
             opacity: 0.95;
         }
-
-        .learn-more-btn {
-             background-color: white;
-             color: #334155; /* slate-700 */
-             border: 1px solid #cbd5e1; /* slate-300 */
-             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-        .learn-more-btn:hover {
-            background-color: #f8fafc; /* slate-50 */
+        
+        /* Updated animation for a "traveling at you" effect */
+        .fade-up {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            filter: blur(5px);
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 1s ease-out;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+        .fade-up.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
         }
 
-        .hero-logo-cloud-wrapper {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.95;
+        .header-fade {
+            background: transparent;
         }
 
-        .hero-logo-cloud-wrapper::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: white;
-            border-radius: 50%;
-            box-shadow: 0 0 25px 8px white, -30px 5px 15px -5px white, 30px 0px 20px -8px white, 0px 25px 25px -10px white, -25px -15px 18px -10px white;
-            opacity: 0.9;
+        .login-button {
+            background: transparent;
+            border: 1px solid transparent; /* No border initially */
             transition: all 0.3s ease;
         }
-        .hero-logo-cloud-wrapper:hover::before {
-             box-shadow: 0 0 35px 12px white, -35px 8px 20px -5px white, 35px 0px 25px -8px white, 0px 30px 30px -10px white, -30px -20px 22px -10px white;
+        .login-button span {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: color 0.3s ease;
+        }
+        .login-button:hover {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            box-shadow: 0px 4px 20px rgba(45, 212, 191, 0.4);
+        }
+        .login-button:hover span {
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: white;
         }
 
-        .hero-logo-cloud-wrapper.small { width: 70px; height: 50px; }
-        .hero-logo-cloud-wrapper.medium { width: 110px; height: 75px; }
-        .hero-logo-cloud-wrapper.large { width: 140px; height: 90px; }
-        .hero-logo-cloud-wrapper.xlarge { width: 160px; height: 105px; }
-        .hero-logo-cloud-wrapper.xxlarge { width: 180px; height: 120px; }
-
-        .hero-logo-cloud-wrapper img { max-width: 60%; max-height: 60%; object-fit: contain; filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.05)); position: relative; z-index: 1; }
-        
-        .fade-up { opacity: 0; transform: scale(0.95) translateY(20px); filter: blur(4px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.8s ease-out; }
-        .fade-up.visible { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
-        
-        header { background-color: transparent; transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out; }
-        header.scrolled { background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
-        
-        .glow-dark-text { text-shadow: 0 0 8px rgba(0, 0, 0, 0.1); }
-        .glow-green-icon { color: #10b981; filter: drop-shadow(0 0 6px #10b98160); }
-        
-        .demo-container { box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); position: relative; }
-
-        .chat-bubble { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
-        .chat-bubble.visible { opacity: 1; transform: translateY(0); }
-
-        .email-body { white-space: pre-wrap; line-height: 1.6; }
-        
-        #fake-search-bar-text { color: #64748b; padding-left: 1rem; line-height: 2.5rem; font-family: monospace; white-space: nowrap; overflow: hidden; }
-
-        /* General element styling for light mode */
-        .card, .demo-container, .testimonial-card { background-color: white; border: 1px solid #e2e8f0; }
-        .section-bg { background-color: #f8fafc; } /* slate-50 */
-        .text-main { color: #1e293b; } /* slate-800 */
-        .text-subtle { color: #64748b; } /* slate-500 */
-        .header-text { color: #0f172a; } /* slate-900 */
-        .header-login span { color: initial; }
-
-        /* Initially hide dark-mode only elements */
-        #starfield, .hero-logo { display: none; }
-
-
-        /* Dark Theme Overrides */
-        body.dark-mode {
-            background: linear-gradient(to bottom, #09090b 0%, #09090b 15%, #1e1b4b 35%, #312e81 50%, #1e1b4b 65%, #09090b 85%, #09090b 100%);
-            color: #94a3b8; /* slate-400 */
+        @keyframes float-header {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
         }
-        body.dark-mode #starfield { display: block; }
-        body.dark-mode .hero-logo-cloud-wrapper { display: none; }
-        body.dark-mode .hero-logo { display: block; position: absolute; animation: float 6s ease-in-out infinite; filter: brightness(0) invert(1) drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4)); mix-blend-mode: screen; opacity: 0.8;}
-        body.dark-mode .text-main, body.dark-mode .header-text { color: #f8fafc; } /* slate-50 */
-        body.dark-mode .text-subtle { color: #94a3b8; }
-        body.dark-mode header.scrolled { background-color: rgba(9, 9, 11, 0.8); backdrop-filter: blur(12px); box-shadow: none; border-bottom: 1px solid #1e293b; }
-        body.dark-mode .card, body.dark-mode .demo-container, body.dark-mode .testimonial-card { background-color: #1e293b; border-color: #334155; }
-        body.dark-mode .section-bg { background-color: #0f172a; }
-        body.dark-mode .demo-container { box-shadow: 0 0 40px rgba(59, 130, 246, 0.3), 0 0 60px rgba(45, 212, 191, 0.2); }
-        body.dark-mode .glow-green-icon { color: #2dd4bf; filter: drop-shadow(0 0 8px #2dd4bf); }
-        body.dark-mode .learn-more-btn { background-color: #1e293b; color: #e2e8f0; border-color: #334155; }
-        body.dark-mode .learn-more-btn:hover { background-color: #334155; }
-        body.dark-mode .header-login span { background: linear-gradient(to right, #2dd4bf, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        body.dark-mode .chat-bubble.user { background: linear-gradient(to right, #3b82f6, #a855f7); }
-        body.dark-mode .chat-bubble.ai { background-color: #334155; }
-        body.dark-mode .email-viewer { background-color: #0f172a; border-color: #334155; }
         
+        .header-logo-float {
+            animation: float-header 6s ease-in-out infinite;
+            display: inline-block;
+        }
 
+        .glow-dark-text {
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .glow-green-icon {
+            color: #10b981; /* A slightly darker green for better contrast */
+            filter: drop-shadow(0 0 8px #10b981);
+        }
+        
+        /* Demo Section Styles */
+        .demo-container {
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15), 0 0 60px rgba(45, 212, 191, 0.1);
+            position: relative;
+        }
+        
+        .card-style {
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .chat-bubble {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .chat-bubble.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .email-body {
+            white-space: pre-wrap; /* To respect newlines in the text */
+            line-height: 1.6;
+        }
     </style>
 </head>
 
-<body class="antialiased">
-<canvas id="starfield"></canvas>
-<header class="fixed top-0 left-0 right-0 z-50">
+<body class="antialiased text-slate-800">
+<!-- Canvas for the starfield background --><canvas id="starfield"></canvas>
+
+<header class="fixed top-0 left-0 right-0 z-50 header-fade">
     <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" class="text-3xl font-bold tracking-tight header-text">sales-rep<span class="gradient-text font-bold">.ai</span></a>
+        <h1 class="text-3xl font-bold text-slate-900 tracking-tight header-logo-float">sales-rep<span class="gradient-text font-bold">.ai</span></h1>
         <nav class="hidden md:flex space-x-8 items-center">
-            <a href="#contact" class="font-bold header-login">
-                <span class="gradient-text">Client Login</span>
+            <a href="#contact" class="login-button font-bold py-2 px-4 rounded-lg">
+                <span>Login</span>
             </a>
         </nav>
+        <a href="#contact" class="md:hidden gradient-bg cta-button text-white hover:text-slate-200 font-bold py-2 px-4 rounded-lg">
+            Get Started
+        </a>
     </div>
 </header>
 
     <main class="relative z-10">
         
-        <section class="relative pt-32 pb-48 flex items-center justify-center" style="height: 800px;">
-            <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
-                <!-- Light Theme Clouds -->
-                <div class="hero-logo-cloud-wrapper medium" style="top: 8%; left: 30%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall"></div>
-                <div class="hero-logo-cloud-wrapper medium" style="top: 65%; right: 35%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce"></div>
-                <div class="hero-logo-cloud-wrapper xlarge" style="top: 18%; left: 35%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI"></div>
-                <div class="hero-logo-cloud-wrapper large" style="top: 15%; right: 28%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude"></div>
-                <div class="hero-logo-cloud-wrapper small" style="top: 45%; right: 15%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot"></div>
-                <div class="hero-logo-cloud-wrapper medium" style="top: 20%; right: 8%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini"></div>
-                <div class="hero-logo-cloud-wrapper large" style="top: 75%; left: 8%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier"></div>
-                <div class="hero-logo-cloud-wrapper xlarge" style="top: 70%; right: 10%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua"></div>
-                <div class="hero-logo-cloud-wrapper large" style="top: 55%; left: 10%;"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho"></div>
-                <div class="hero-logo-cloud-wrapper medium" style="top: 70%; left: 40%; transform: translateX(-50%);"><img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall"></div>
-                <div class="hero-logo-cloud-wrapper small" style="top: 88%; left: 30%;"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google"></div>
-                <div class="hero-logo-cloud-wrapper xxlarge" style="top: 18%; left: 12%;"><img src="https://www.svgrepo.com/show/354352/slack.svg" alt="Slack"></div>
-                <div class="hero-logo-cloud-wrapper small" style="top: 92%; left: 55%;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/240px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png" alt="Microsoft Teams"></div>
-                
-                <!-- Dark Theme Logos -->
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="hero-logo" style="top: 25%; left: 2%; width: 80px; animation-delay: 0s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce" class="hero-logo" style="top: 20%; left: 18%; width: 100px; animation-delay: -1.2s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="hero-logo" style="top: 25%; left: 40%; width: 125px; animation-delay: -2.5s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude" class="hero-logo" style="top: 10%; right: 35%; width: 110px; animation-delay: -3.2s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot" class="hero-logo" style="top: 30%; right: 15%; width: 90px; animation-delay: -4s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini" class="hero-logo" style="top: 15%; right: 8%; width: 90px; animation-delay: -5.2s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier" class="hero-logo" style="top: 70%; left: 8%; width: 95px; animation-delay: -6.8s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="hero-logo" style="top: 60%; right: 8%; width: 120px; animation-delay: -7.5s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho" class="hero-logo" style="top: 50%; left: 10%; width: 80px; animation-delay: -8s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall" class="hero-logo" style="top: 80%; left: 50%; width: 90px; transform: translateX(-50%); animation-delay: -9.4s;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="hero-logo" style="top: 85%; left: 25%; width: 90px; animation-delay: -5s;">
-                <img src="https://www.svgrepo.com/show/354352/slack.svg" alt="Slack" class="hero-logo" style="top: 85%; right: 25%; width: 90px; animation-delay: -15s;">
-            </div>
+        <section class="relative pt-40 pb-24 flex items-center justify-center" style="min-height: 600px;">
             <div class="container mx-auto px-6 text-center">
                 <div class="relative z-10">
-                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-main fade-up">
-                        <span class="gradient-text">Close Deals While You <span id="theme-toggle" class="cursor-pointer">Sleep</span></span>
+                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-slate-900 fade-up">
+                        <span class="gradient-text">Close Deals While You Sleep</span>
                     </h2>
-                    <p class="text-lg md:text-xl max-w-3xl mx-auto text-subtle mb-8 fade-up" style="transition-delay: 150ms;">
-                        ...they operate around the clock.
+                    <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-700 mb-8 fade-up" style="transition-delay: 150ms;">
+                        AI agents that prospect, qualify, and convert — around the clock
                     </p>
                     <div class="flex justify-center space-x-4 fade-up" style="transition-delay: 300ms;">
                         <a href="#contact" class="gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-8 rounded-lg text-lg">
-                           Enterprise Clients
+                            Request a Demo
                         </a>
-                        <a href="#how-it-works" class="learn-more-btn font-bold py-3 px-8 rounded-lg text-lg transition-colors">
+                        <a href="#how-it-works" class="bg-white/80 hover:bg-white text-slate-700 font-bold py-3 px-8 rounded-lg text-lg transition-colors border border-slate-200 shadow-sm">
                             Learn More
                         </a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integrations Logo Cloud -->
+        <section id="integrations" class="py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="text-center text-sm font-semibold text-slate-600 tracking-wider uppercase">Integrates with your favorite tools</h2>
+                <div class="mt-10 flex justify-center items-center flex-wrap gap-x-12 gap-y-8">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                    <img class="h-10 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://www.svgrepo.com/show/354352/slack.svg" alt="Slack">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall">
+                    <img class="h-7 w-auto opacity-50 grayscale transition hover:grayscale-0 hover:opacity-100" src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua">
                 </div>
             </div>
         </section>
@@ -212,18 +216,18 @@
         <section id="demo" class="py-20">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-up">
-                    <h3 class="text-3xl md:text-4xl font-bold text-main gradient-text">Cut out the middle-<i>human</i></h3>
-                    <p class="text-subtle mt-2 glow-dark-text">Automate entire departments with Agentic teams.</p>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 gradient-text">Cut out the middle-<i>human</i></h3>
+                    <p class="text-slate-800 mt-2 glow-dark-text">Automate entire departments with Agentic teams.</p>
                 </div>
 
                 <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center">
 
-                    <div class="flex-1 max-w-md mx-auto lg:mx-0">
-                         <h4 class="text-xl font-semibold text-center text-main mb-4">Agentic AI: Client SMS Conversation</h4>
-                        <div class="demo-container rounded-3xl border-8 border-gray-300 fade-up h-[580px] flex flex-col">
+                    <!-- SMS Demo --><div class="flex-1 max-w-md mx-auto lg:mx-0">
+                         <h4 class="text-xl font-semibold text-center text-slate-900 mb-4">Agentic AI: Client SMS Conversation</h4>
+                        <div class="card-style rounded-3xl border-8 border-white/90 demo-container fade-up h-[580px] flex flex-col">
                             <div class="p-4 flex-grow flex flex-col space-y-4 overflow-y-auto" id="sms-chat-box">
-</div>
-                            <div class="p-2 border-t">
+                                <!-- SMS messages will be injected here --></div>
+                            <div class="p-2 border-t border-slate-200">
                                 <div class="flex items-center">
                                     <input type="text" placeholder="AI is typing..." class="w-full bg-slate-100 text-slate-500 rounded-full py-2 px-4 focus:outline-none" disabled>
                                 </div>
@@ -231,26 +235,92 @@
                         </div>
                     </div>
 
-                    <div class="flex-1 max-w-md mx-auto lg:mx-0">
-                        <h4 class="text-xl font-semibold text-center text-main mb-4">Agentic AI: Lender Email Follow-up</h4>
-                        <div class="demo-container email-viewer rounded-2xl fade-up h-[580px] flex flex-col">
+                    <!-- Email Demo --><div class="flex-1 max-w-md mx-auto lg:mx-0">
+                        <h4 class="text-xl font-semibold text-center text-slate-900 mb-4">Agentic AI: Lender Email Follow-up</h4>
+                        <div class="card-style rounded-2xl border border-slate-200/80 demo-container fade-up h-[580px] flex flex-col">
                             <div class="p-4 flex-shrink-0">
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center space-x-3">
                                         <img src="https://placehold.co/40x40/e2e8f0/475569?text=Z" class="w-10 h-10 rounded-full" alt="Zak avatar">
                                         <div>
-                                            <p class="font-semibold text-main">zak@sales-rep.ai</p>
-                                            <p class="text-sm text-subtle">to <span class="gradient-text font-semibold">dane@lenderbank.com</span></p>
+                                            <p class="font-semibold text-slate-900">zak@sales-rep.ai</p>
+                                            <p class="text-sm text-slate-500">to <span class="gradient-text font-semibold">dane@lenderbank.com</span></p>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-subtle">Just now</p>
+                                    <p class="text-xs text-slate-400">Just now</p>
                                 </div>
-                                <h3 class="text-lg font-semibold text-main">Financing Inquiry: Project Expansion for Innovate Corp</h3>
+                                <h3 class="text-lg font-semibold text-slate-900">Financing Inquiry: Project Expansion for Innovate Corp</h3>
                             </div>
-                            <hr>
+                            <hr class="border-slate-200">
                             <div class="p-4 flex-grow overflow-y-auto" id="email-body-box">
-</div>
+                               <!-- Email body will be injected here --></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="features" class="py-20">
+
+<div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-up">
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 gradient-text">Beyond Human Capabilities</h3>
+                    <p class="text-slate-800 mt-2 glow-dark-text">An AI sales rep that redefines performance.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+
+<div class="card-style p-6 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-slate-100 mb-4">
+                            <i data-lucide="clock" class="text-blue-500 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">24/7 Uninterrupted Operation</h4>
+                        <p class="text-slate-600">Never miss a lead again. Your AI agent works across all time zones, engaging prospects at the perfect moment, day or night...because your new sales team operates 24/7.</p>
+                    </div>
+                    
+
+<div class="card-style p-6 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 100ms;">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-slate-100 mb-4">
+                            <i data-lucide="brain-circuit" class="text-blue-500 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">Truly Agentic AI</h4>
+                        <p class="text-slate-600">This is not a chatbot. Our AI autonomously plans, reasons, and executes complex, multi-step sales strategies to nurture leads to conversion.</p>
+                    </div>
+                    
+
+<div class="card-style p-6 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 200ms;">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-slate-100 mb-4">
+                            <i data-lucide="trending-up" class="text-blue-500 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">Incredible Performance</h4>
+                        <p class="text-slate-600">Dramatically increase your sales pipeline volume and conversion rates. Our AI is trained on vast datasets of successful sales interactions.</p>
+                    </div>
+                    
+
+<div class="card-style p-6 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 300ms;">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-slate-100 mb-4">
+                            <i data-lucide="database-zap" class="text-blue-500 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">Seamless CRM Integration</h4>
+                        <p class="text-slate-600">Natively connects with Salesforce, HubSpot, and other major CRMs. Your data stays synced, and insights are automatically logged.</p>
+                    </div>
+                    
+
+<div class="card-style p-6 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 400ms;">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-slate-100 mb-4">
+                            <i data-lucide="bar-chart-3" class="text-blue-500 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">Real-time Analytics</h4>
+                        <p class="text-slate-600">Monitor your AI's performance through an intuitive dashboard. Track outreach, engagement, and meetings booked with full transparency.</p>
+                    </div>
+                    
+
+<div class="card-style p-6 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 500ms;">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-slate-100 mb-4">
+                            <i data-lucide="shield-check" class="text-blue-500 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">Enterprise-Grade Security</h4>
+                        <p class="text-slate-600">Your data is protected with industry-leading security protocols. We are SOC 2 Type II compliant and GDPR ready, as well as TCPA compliant.</p>
                     </div>
                 </div>
             </div>
@@ -259,83 +329,81 @@
         <section id="workflow-demo" class="py-20">
     <div class="container mx-auto px-6">
         <div class="text-center mb-12 fade-up">
-            <h3 class="text-3xl md:text-4xl font-bold text-main gradient-text">Automated Workflows & Insights</h3>
-            <p class="text-subtle mt-2 glow-dark-text">From updating records to strategic planning, the AI handles it all.</p>
+            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 gradient-text">Automated Workflows & Insights</h3>
+            <p class="text-slate-800 mt-2 glow-dark-text">From updating records to strategic planning, the AI handles it all.</p>
         </div>
         <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center">
-            
-<div class="flex-1 max-w-md mx-auto lg:mx-0">
-                <h4 class="text-xl font-semibold text-center text-main mb-4">Automated CRM Workflow</h4>
-                <div class="demo-container rounded-2xl fade-up h-[580px] flex flex-col p-4">
+            <!-- CRM Demo --><div class="flex-1 max-w-md mx-auto lg:mx-0">
+                <h4 class="text-xl font-semibold text-center text-slate-900 mb-4">Automated CRM Workflow</h4>
+                <div class="card-style rounded-2xl demo-container fade-up h-[580px] flex flex-col p-4">
                     <div class="flex items-center space-x-4 mb-4">
                         <img src="https://placehold.co/60x60/e2e8f0/475569?text=SC" class="w-16 h-16 rounded-full" alt="Sarah Connor">
                         <div>
-                            <h5 class="text-2xl font-bold text-main">Sarah Connor</h5>
-                            <p class="text-subtle">Innovate Corp.</p>
+                            <h5 class="text-2xl font-bold text-slate-900">Sarah Connor</h5>
+                            <p class="text-slate-500">Innovate Corp.</p>
                         </div>
                     </div>
                     <div class="space-y-4">
-                        <div class="flex justify-between items-center bg-slate-50 p-3 rounded-lg card">
-                            <span class="font-medium">Lead Status</span>
-                            <span id="lead-status" class="px-3 py-1 text-sm font-semibold rounded-full bg-yellow-400/20 text-yellow-600">
+                        <div class="flex justify-between items-center bg-slate-100/80 p-3 rounded-lg">
+                            <span class="text-slate-600 font-medium">Lead Status</span>
+                            <span id="lead-status" class="px-3 py-1 text-sm font-semibold rounded-full bg-yellow-500/20 text-yellow-600">
                                 Contacted
                             </span>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-lg card">
-                            <span class="font-medium">Last Activity</span>
-                            <p class="text-main mt-1">SMS conversation initiated.</p>
+                        <div class="bg-slate-100/80 p-3 rounded-lg">
+                            <span class="text-slate-600 font-medium">Last Activity</span>
+                            <p class="text-slate-800 mt-1">SMS conversation initiated.</p>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-lg h-48 flex flex-col card">
-                            <span class="font-medium mb-2">New Note</span>
-                            <div id="crm-note" class="text-main flex-grow email-body"></div>
+                        <div class="bg-slate-100/80 p-3 rounded-lg h-48 flex flex-col">
+                            <span class="text-slate-600 font-medium mb-2">New Note</span>
+                            <div id="crm-note" class="text-slate-800 flex-grow email-body"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-<div class="flex-1 max-w-md mx-auto lg:mx-0">
-                <h4 class="text-xl font-semibold text-center text-main mb-4">Advanced Reporting & Planning</h4>
-                <div class="demo-container rounded-2xl fade-up h-[580px] flex flex-col p-4">
+            <!-- Reporting Demo --><div class="flex-1 max-w-md mx-auto lg:mx-0">
+                <h4 class="text-xl font-semibold text-center text-slate-900 mb-4">Advanced Reporting & Planning</h4>
+                <div class="card-style rounded-2xl demo-container fade-up h-[580px] flex flex-col p-4">
                     <div class="flex justify-between items-center mb-4">
-                        <h5 class="text-xl font-bold text-main">Q3 Performance</h5>
-                        <span class="text-sm text-subtle">Generated by AI</span>
+                        <h5 class="text-xl font-bold text-slate-900">Q3 Performance</h5>
+                        <span class="text-sm text-slate-500">Generated by AI</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-4">
-                        <div class="bg-slate-50 p-3 rounded-lg card">
-                            <span class="text-sm">Leads Contacted</span>
-                            <p id="kpi-leads" class="text-2xl font-bold text-main">0</p>
+                        <div class="bg-slate-100/80 p-3 rounded-lg">
+                            <span class="text-slate-600 text-sm">Leads Contacted</span>
+                            <p id="kpi-leads" class="text-2xl font-bold text-slate-900">0</p>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-lg card">
-                            <span class="text-sm">Meetings Booked</span>
-                            <p id="kpi-meetings" class="text-2xl font-bold text-main">0</p>
+                        <div class="bg-slate-100/80 p-3 rounded-lg">
+                            <span class="text-slate-600 text-sm">Meetings Booked</span>
+                            <p id="kpi-meetings" class="text-2xl font-bold text-slate-900">0</p>
                         </div>
                     </div>
-                    <div class="bg-slate-50 p-3 rounded-lg mb-4 flex-grow card">
-                        <p class="text-sm mb-2">Conversion Rate by Source</p>
+                    <div class="bg-slate-100/80 p-3 rounded-lg mb-4 flex-grow">
+                        <p class="text-slate-600 text-sm mb-2">Conversion Rate by Source</p>
                         <div class="space-y-2 pt-2">
                              <div class="flex items-center">
-                                <span class="text-xs w-16 text-right pr-2">Web</span>
+                                <span class="text-xs text-slate-500 w-16 text-right pr-2">Web</span>
                                 <div class="w-full bg-slate-200 rounded-full h-4">
                                     <div id="bar-web" class="bg-blue-500 h-4 rounded-full text-right pr-2 text-xs text-white"></div>
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <span class="text-xs w-16 text-right pr-2">Referral</span>
+                                <span class="text-xs text-slate-500 w-16 text-right pr-2">Referral</span>
                                 <div class="w-full bg-slate-200 rounded-full h-4">
                                     <div id="bar-referral" class="bg-teal-500 h-4 rounded-full text-right pr-2 text-xs text-white"></div>
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <span class="text-xs w-16 text-right pr-2">Cold Call</span>
+                                <span class="text-xs text-slate-500 w-16 text-right pr-2">Cold Call</span>
                                 <div class="w-full bg-slate-200 rounded-full h-4">
                                     <div id="bar-cold" class="bg-purple-500 h-4 rounded-full text-right pr-2 text-xs text-white"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-slate-50 p-3 rounded-lg h-32 flex flex-col card">
-                        <span class="font-medium mb-2">AI-Generated Insights</span>
-                        <div id="report-insights" class="text-sm flex-grow email-body overflow-y-auto"></div>
+                    <div class="bg-slate-100/80 p-3 rounded-lg h-32 flex flex-col">
+                        <span class="text-slate-600 font-medium mb-2">AI-Generated Insights</span>
+                        <div id="report-insights" class="text-slate-800 text-sm flex-grow email-body overflow-y-auto"></div>
                     </div>
                 </div>
             </div>
@@ -343,221 +411,145 @@
     </div>
 </section>
 
-        <section id="enrichment-demo" class="py-20 section-bg">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12 fade-up">
-                    <h3 class="text-3xl md:text-4xl font-bold text-main gradient-text">Autonomous Lead Enrichment</h3>
-                    <p class="text-subtle mt-2 glow-dark-text">From a name to a full profile in seconds.</p>
-                </div>
-                <div class="flex flex-col md:flex-row gap-8 lg:gap-12 justify-center items-start">
-                    
-                    <div class="flex-1 max-w-lg w-full">
-                        <h4 class="text-xl font-semibold text-center text-main mb-4 gradient-text">Autonomous Research</h4>
-                         <div id="demo-screen" class="demo-container rounded-2xl fade-up h-[580px] p-6 relative overflow-hidden">
-                            
-                            <div class="absolute top-4 left-4 right-4 h-8 bg-slate-100 rounded-md flex items-center px-3 space-x-2">
-                                 <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                                 <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                 <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                            </div>
-                            <div id="fake-search-bar" class="absolute top-16 left-4 right-4 h-10 bg-slate-200 rounded-md">
-                                <p id="fake-search-bar-text"></p>
-                            </div>
-                            <div id="fake-link-1" class="absolute top-32 left-8 w-48 h-5 bg-slate-200 rounded-sm"></div>
-                            <div id="fake-link-2" class="absolute top-40 left-8 w-64 h-5 bg-slate-200 rounded-sm"></div>
-                            <div id="fake-article" class="absolute top-52 left-8 right-8 h-40 bg-slate-100 rounded-lg p-3 space-y-2">
-                                <div class="w-3/4 h-3 bg-slate-200 rounded"></div>
-                                <div class="w-full h-3 bg-slate-200 rounded"></div>
-                                <div class="w-1/2 h-3 bg-slate-200 rounded"></div>
-                            </div>
-                            <div id="fake-profile" class="absolute top-52 left-8 right-8 h-40 bg-slate-100 rounded-lg p-3 space-y-2 opacity-0">
-                                 <div class="w-1/3 h-4 bg-slate-300 rounded"></div>
-                                 <div class="w-1/2 h-3 bg-slate-200 rounded mt-4"></div>
-                                 <div class="w-1/4 h-3 bg-slate-200 rounded"></div>
-                            </div>
-                            <div id="fake-database" class="absolute bottom-8 left-8 w-40 h-10 bg-slate-200 rounded-md"></div>
-                            <div id="fake-report" class="absolute bottom-8 right-8 w-40 h-10 bg-slate-200 rounded-md"></div>
-        
-                            
-        <i id="mouse-cursor" data-lucide="mouse-pointer-2" class="w-6 h-6 text-main absolute top-1/2 left-1/2" style="transition: top 0.5s ease, left 0.5s ease;"></i>
+<section id="enrichment-demo" class="py-20 bg-slate-500/5">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-12 fade-up">
+            <h3 class="text-3xl md:text-4xl font-bold text-slate-900 gradient-text">Autonomous Lead Enrichment</h3>
+            <p class="text-slate-800 mt-2 glow-dark-text">From a name to a full profile in seconds.</p>
+        </div>
+        <div class="flex flex-col md:flex-row gap-8 lg:gap-12 justify-center items-start">
+            <!-- Left side: The profile card --><div class="flex-1 max-w-lg w-full">
+                <h4 class="text-xl font-semibold text-center text-slate-900 mb-4">Enriched Lead Profile</h4>
+                <div class="card-style rounded-2xl demo-container fade-up h-[580px] p-6 flex flex-col">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://placehold.co/60x60/e2e8f0/475569?text=IC" class="w-16 h-16 rounded-full" alt="Innovate Corp">
+                        <div>
+                            <h5 class="text-2xl font-bold text-slate-900">Innovate Corp.</h5>
+                            <p class="text-slate-500">Initial Lead</p>
                         </div>
                     </div>
-        
-                    <div class="flex-1 max-w-lg w-full">
-                        <h4 class="text-xl font-semibold text-center text-main mb-4 gradient-text">Enriched Lead Profile</h4>
-                        <div class="demo-container rounded-2xl fade-up h-[580px] p-6 flex flex-col">
-                            <div class="flex items-center space-x-4 mb-6">
-                                <img src="https://placehold.co/60x60/e2e8f0/475569?text=IC" class="w-16 h-16 rounded-full" alt="Innovate Corp">
-                                <div>
-                                    <h5 class="text-2xl font-bold text-main">Innovate Corp.</h5>
-                                    <p class="text-subtle">Initial Lead</p>
-                                </div>
-                            </div>
-                            <div id="enrichment-data" class="space-y-2 overflow-hidden">
-                                
-        <div class="enrichment-item flex items-center bg-slate-50 p-2 rounded-lg card">
-                                    <i data-lucide="info" class="w-5 h-5 mr-3 text-subtle"></i>
-                                    <span class="text-subtle">Contact: <span class="text-subtle ml-2">---</span></span>
-                                </div>
-                                <div class="enrichment-item flex items-center bg-slate-50 p-2 rounded-lg card">
-                                    <i data-lucide="briefcase" class="w-5 h-5 mr-3 text-subtle"></i>
-                                    <span class="text-subtle">Industry: <span class="text-subtle ml-2">---</span></span>
-                                </div>
-                                <div class="enrichment-item flex items-start bg-slate-50 p-2 rounded-lg card">
-                                    <i data-lucide="newspaper" class="w-5 h-5 mr-3 text-subtle flex-shrink-0 mt-1"></i>
-                                    <span class="text-subtle">Recent News: <span class="text-subtle ml-2">---</span></span>
-                                </div>
-                                 <div class="enrichment-item flex items-start bg-slate-50 p-2 rounded-lg card">
-                                    <i data-lucide="lightbulb" class="w-5 h-5 mr-3 text-subtle flex-shrink-0 mt-1"></i>
-                                    <span class="text-subtle">Buying Signals: <span class="text-subtle ml-2">---</span></span>
-                                </div>
-                                 <div class="enrichment-item flex items-center bg-slate-50 p-2 rounded-lg card">
-                                    <i data-lucide="hash" class="w-5 h-5 mr-3 text-subtle"></i>
-                                    <span class="text-subtle">NAICS Code: <span class="text-subtle ml-2">---</span></span>
-                                </div>
-                                 <div class="enrichment-item flex items-center bg-slate-50 p-2 rounded-lg card">
-                                    <i data-lucide="file-text" class="w-5 h-5 mr-3 text-subtle"></i>
-                                    <span class="text-subtle">UCC Filings: <span class="text-subtle ml-2">---</span></span>
-                                </div>
-                                 <div class="enrichment-item flex items-center bg-slate-50 p-2 rounded-lg card">
-                                    <i data-lucide="calendar-days" class="w-5 h-5 mr-3 text-subtle"></i>
-                                    <span class="text-subtle">Business Start Date: <span class="text-subtle ml-2">---</span></span>
-                                </div>
-                            </div>
+                    <div id="enrichment-data" class="space-y-2 overflow-hidden">
+                        <!-- Enriched data will appear here --><div class="enrichment-item flex items-center bg-slate-100/80 p-2 rounded-lg">
+                            <i data-lucide="info" class="w-5 h-5 mr-3 text-slate-400"></i>
+                            <span class="text-slate-400">Contact: <span class="text-slate-500 ml-2">---</span></span>
+                        </div>
+                        <div class="enrichment-item flex items-center bg-slate-100/80 p-2 rounded-lg">
+                            <i data-lucide="briefcase" class="w-5 h-5 mr-3 text-slate-400"></i>
+                            <span class="text-slate-400">Industry: <span class="text-slate-500 ml-2">---</span></span>
+                        </div>
+                        <div class="enrichment-item flex items-start bg-slate-100/80 p-2 rounded-lg">
+                            <i data-lucide="newspaper" class="w-5 h-5 mr-3 text-slate-400 flex-shrink-0 mt-1"></i>
+                            <span class="text-slate-400">Recent News: <span class="text-slate-500 ml-2">---</span></span>
+                        </div>
+                         <div class="enrichment-item flex items-start bg-slate-100/80 p-2 rounded-lg">
+                            <i data-lucide="lightbulb" class="w-5 h-5 mr-3 text-slate-400 flex-shrink-0 mt-1"></i>
+                            <span class="text-slate-400">Buying Signals: <span class="text-slate-500 ml-2">---</span></span>
+                        </div>
+                         <div class="enrichment-item flex items-center bg-slate-100/80 p-2 rounded-lg">
+                            <i data-lucide="hash" class="w-5 h-5 mr-3 text-slate-400"></i>
+                            <span class="text-slate-400">NAICS Code: <span class="text-slate-500 ml-2">---</span></span>
+                        </div>
+                         <div class="enrichment-item flex items-center bg-slate-100/80 p-2 rounded-lg">
+                            <i data-lucide="file-text" class="w-5 h-5 mr-3 text-slate-400"></i>
+                            <span class="text-slate-400">UCC Filings: <span class="text-slate-500 ml-2">---</span></span>
+                        </div>
+                         <div class="enrichment-item flex items-center bg-slate-100/80 p-2 rounded-lg">
+                            <i data-lucide="calendar-days" class="w-5 h-5 mr-3 text-slate-400"></i>
+                            <span class="text-slate-400">Business Start Date: <span class="text-slate-500 ml-2">---</span></span>
                         </div>
                     </div>
-        
                 </div>
             </div>
-        </section>
-        
-        <section id="features" class="py-20 section-bg">
 
-<div class="container mx-auto px-6">
-                <div class="text-center mb-12 fade-up">
-                    <h3 class="text-3xl md:text-4xl font-bold text-main gradient-text">Beyond Human Capabilities</h3>
-                    <p class="text-subtle mt-2 glow-dark-text">An AI sales rep that redefines performance.</p>
-                </div>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-<div class="card p-6 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4">
-                            <i data-lucide="clock" class="text-blue-600 w-6 h-6"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">24/7 Uninterrupted Operation</h4>
-                        <p class="text-subtle">Never miss a lead again. Your AI agent works across all time zones, engaging prospects at the perfect moment, day or night...because your new sales team operates 24/7.</p>
+            <!-- Right side: The mouse movement demo --><div class="flex-1 max-w-lg w-full">
+                <h4 class="text-xl font-semibold text-center text-slate-900 mb-4">Autonomous Research</h4>
+                 <div id="demo-screen" class="card-style rounded-2xl demo-container fade-up h-[580px] p-6 relative overflow-hidden">
+                    <!-- Fake UI elements for the mouse to interact with --><div class="absolute top-4 left-4 right-4 h-8 bg-slate-100/90 rounded-md flex items-center px-3 space-x-2">
+                         <div class="w-3 h-3 bg-red-400 rounded-full"></div>
+                         <div class="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                         <div class="w-3 h-3 bg-green-400 rounded-full"></div>
                     </div>
-                    
-<div class="card p-6 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 100ms;">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4">
-                            <i data-lucide="brain-circuit" class="text-blue-600 w-6 h-6"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">Truly Agentic AI</h4>
-                        <p class="text-subtle">Agentic AI is here. Our AI autonomously plans, reasons, and executes complex, multi-step sales strategies to nurture leads to conversion.</p>
-                    </div>
-                    
-<div class="card p-6 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 200ms;">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4">
-                            <i data-lucide="trending-up" class="text-blue-600 w-6 h-6"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">Incredible Performance</h4>
-                        <p class="text-subtle">Dramatically increase your sales pipeline volume and conversion rates. Our AI is trained on vast datasets of successful sales interactions.</p>
-                    </div>
-                    
-<div class="card p-6 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 300ms;">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4">
-                            <i data-lucide="database-zap" class="text-blue-600 w-6 h-6"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">Seamless CRM Integration</h4>
-                        <p class="text-subtle">Natively connects with Salesforce, HubSpot, and other major CRMs. Your data stays synced, and insights are automatically logged.</p>
-                    </div>
-                    
-<div class="card p-6 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 400ms;">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4">
-                            <i data-lucide="bar-chart-3" class="text-blue-600 w-6 h-6"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">Real-time Analytics</h4>
-                        <p class="text-subtle">Monitor your AI's performance through an intuitive dashboard. Track outreach, engagement, and meetings booked with full transparency.</p>
-                    </div>
-                    
-<div class="card p-6 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 500ms;">
-                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4">
-                            <i data-lucide="shield-check" class="text-blue-600 w-6 h-6"></i>
-                        </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">Enterprise-Grade Security</h4>
-                        <p class="text-subtle">Your data is protected with industry-leading security protocols. We are SOC 2 Type II compliant and GDPR ready, as well as TCPA compliant.</p>
-                    </div>
+                    <div id="fake-search-bar" class="absolute top-16 left-4 right-4 h-10 bg-slate-200/90 rounded-md"></div>
+                    <div id="fake-link-1" class="absolute top-32 left-8 w-48 h-5 bg-slate-200/90 rounded-sm"></div>
+                    <div id="fake-link-2" class="absolute top-40 left-8 w-64 h-5 bg-slate-200/90 rounded-sm"></div>
+                    <div id="fake-article" class="absolute top-52 left-8 right-8 h-40 bg-slate-200/70 rounded-lg"></div>
+                    <div id="fake-database" class="absolute bottom-8 left-8 w-40 h-10 bg-slate-200/90 rounded-md"></div>
+                    <div id="fake-report" class="absolute bottom-8 right-8 w-40 h-10 bg-slate-200/90 rounded-md"></div>
+
+                    <!-- The mouse cursor --><i id="mouse-cursor" data-lucide="mouse-pointer-2" class="w-6 h-6 text-slate-800 absolute top-1/2 left-1/2" style="transition: top 0.5s ease, left 0.5s ease;"></i>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
 <section id="how-it-works" class="py-20">
 
 <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-up">
-                    <h3 class="text-3xl md:text-4xl font-bold text-main gradient-text">Human-Like Tasks</h3>
-                    <p class="text-subtle mt-2 glow-dark-text">Superhuman Performance</p>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 gradient-text">Human-Like Tasks</h3>
+                    <p class="text-slate-800 mt-2 glow-dark-text">Superhuman Performance</p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8 text-center">
-                    <div class="card p-8 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 border border-slate-200 mb-4 mx-auto">
-                            <i data-lucide="users" class="text-blue-600 w-8 h-8"></i>
+                    <div class="card-style p-8 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-slate-100 border border-slate-200 mb-4 mx-auto">
+                            <i data-lucide="users" class="text-blue-500 w-8 h-8"></i>
 
 </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">1. Onboard your agents</h4>
-                        <p class="text-subtle">Hire your agent, provide company documentation, and credentials. Just a human. It will use your CRM, phone, and email systems to actively engage with clients.</p>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">1. Onboard your agent</h4>
+                        <p class="text-slate-700">Hire your agent, connect your systems, and watch it work. It integrates with your CRM, phone, and email to engage, follow up, and convert — just like your top performer.</p>
                     </div>
-                    <div class="card p-8 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 150ms;">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 border border-slate-200 mb-4 mx-auto">
-                            <i data-lucide="briefcase" class="text-blue-600 w-8 h-8"></i>
+                    <div class="card-style p-8 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 150ms;">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-slate-100 border border-slate-200 mb-4 mx-auto">
+                            <i data-lucide="briefcase" class="text-blue-500 w-8 h-8"></i>
                         </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">2. Give your agent a desk</h4>
-                        <p class="text-subtle">Ready to go? It instantly begins analyzing leads, initiating outreach, and engaging prospects 24/7.</p>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">2. First Day</h4>
+                        <p class="text-slate-700">It immediately starts analyzing and enriching leads, initiating outreach, and engaging prospects until they complete an application.</p>
                     </div>
-                    <div class="card p-8 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 300ms;">
-                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 border border-slate-200 mb-4 mx-auto">
-                            <i data-lucide="zap" class="text-blue-600 w-8 h-8"></i>
+                    <div class="card-style p-8 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 300ms;">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-slate-100 border border-slate-200 mb-4 mx-auto">
+                            <i data-lucide="zap" class="text-blue-500 w-8 h-8"></i>
                         </div>
-                        <h4 class="text-xl font-semibold text-main mb-2 gradient-text">3. Agent Perform</h4>
-                        <p class="text-subtle">The AI can call, text, and email prospects. It can update reports, and think critically. It will perform its job until it has succeeded.</p>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2 gradient-text-dark">3. Top Performer</h4>
+                        <p class="text-slate-700">Your agent calls, texts, and emails prospects. It updates reports, interprets data, and adapts in real time. It performs with precision and persistence — until the job is done.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-<section id="testimonials" class="py-20 section-bg">
+<section id="testimonials" class="py-20">
 
 <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-up">
-                    <h3 class="text-3xl md:text-4xl font-bold text-main gradient-text">Trusted by High-Growth Companies</h3>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 gradient-text">Trusted by High-Growth Companies</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                    <div class="testimonial-card p-8 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up">
-                        <p class="text-subtle mb-4">"the AI sales-reps just about quadrupled our qualified leads in the first month. It's like having a team of ten superhuman SDRs for each one working around the clock. Game-changing."</p>
+                    <div class="card-style p-8 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up">
+                        <p class="text-slate-700 mb-4">"the AI sales-reps just about quadrupled our qualified leads in the first month. It's like having a team of ten superhuman SDRs for each one working around the clock. Game-changing."</p>
                         <div class="flex items-center">
                             <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/e2e8f0/475569?text=JS" alt="John Stanwick">
                             <div>
-                                <p class="font-semibold text-main">John Stanwick</p>
+                                <p class="font-semibold text-slate-900">John Stanwick</p>
                                 <p class="text-blue-600 font-medium">CEO, QuantumLeap SaaS</p>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card p-8 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 100ms;">
-                        <p class="text-subtle mb-4">"The setup was unbelievably easy, and the ROI was almost immediate. Our sales team is happier and more effective, focusing only on closing deals."</p>
+                    <div class="card-style p-8 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 100ms;">
+                        <p class="text-slate-700 mb-4">"The setup was unbelievably easy, and the ROI was almost immediate. Our sales team is happier and more effective, focusing only on closing deals."</p>
                         <div class="flex items-center">
                             <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/e2e8f0/475569?text=AM" alt="Aisha Moreno">
                             <div>
-                                <p class="font-semibold text-main">Aisha Moreno</p>
+                                <p class="font-semibold text-slate-900">Aisha Moreno</p>
                                 <p class="text-blue-600 font-medium">VP of Sales, Innovate Dynamics</p>
                             </div>
                         </div>
                     </div>
-                    <div class="testimonial-card p-8 rounded-xl transition-all duration-300 hover:border-blue-500 hover:-translate-y-1 hover:shadow-lg fade-up" style="transition-delay: 200ms;">
-                        <p class="text-subtle mb-4">"We deal with complex financial data daily. This AI not only handles outreach but pre-qualifies leads with incredible accuracy, saving our analysts countless hours."</p>
+                    <div class="card-style p-8 rounded-xl transition-all duration-300 hover:border-blue-500/50 hover:-translate-y-1 fade-up" style="transition-delay: 200ms;">
+                        <p class="text-slate-700 mb-4">"We deal with complex financial data daily. This AI not only handles outreach but pre-qualifies leads with incredible accuracy, saving our analysts countless hours."</p>
                         <div class="flex items-center">
                             <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/e2e8f0/475569?text=HG" alt="Henry Gross">
                             <div>
-                                <p class="font-semibold text-main">Henry Gross</p>
+                                <p class="font-semibold text-slate-900">Henry Gross</p>
                                 <p class="text-blue-600 font-medium">CEO, Sutton Funding</p>
                             </div>
                         </div>
@@ -568,31 +560,33 @@
 
 
         
+
 <section id="pricing" class="py-20">
 
 <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-up">
-                    <h3 class="text-3xl md:text-4xl font-bold text-main gradient-text">Built for Enterprise Clients</h3>
-                    <p class="text-subtle mt-2 glow-dark-text">A plan designed for large-scale, custom deployments.</p>
+                    <h3 class="text-3xl md:text-4xl font-bold text-slate-900 gradient-text">Built for Enterprise</h3>
+                    <p class="text-slate-800 mt-2 glow-dark-text">A plan designed for large-scale, custom deployments.</p>
                 </div>
                 <div class="flex justify-center">
                     
-<div class="card rounded-xl p-8 flex flex-col md:flex-row h-full w-full max-w-4xl transition-all duration-300 hover:border-blue-500 fade-up hover:shadow-xl">
+
+<div class="card-style rounded-xl p-8 flex flex-col md:flex-row h-full w-full max-w-4xl transition-all duration-300 hover:border-blue-500/50 fade-up">
                         
                         <div class="md:w-1/2 md:pr-8 flex flex-col text-left">
-                            <h4 class="text-2xl font-bold text-main mb-2">Enterprise</h4>
-                            <p class="text-subtle mb-6">A bespoke solution for organizations requiring maximum performance, security, and support.</p>
-                            <p class="text-5xl font-bold text-main mb-6">Let's Talk</p>
-                            <p class="text-subtle mb-8 flex-grow">
+                            <h4 class="text-2xl font-bold text-slate-900 mb-2">Enterprise</h4>
+                            <p class="text-slate-600 mb-6">A bespoke solution for organizations requiring maximum performance, security, and support.</p>
+                            <p class="text-5xl font-bold text-slate-900 mb-6">Let's Talk</p>
+                            <p class="text-slate-600 mb-8 flex-grow">
                                 Our enterprise plan is a strategic partnership. We work with you to build custom integrations, develop specialized AI capabilities, and provide dedicated oversight to ensure maximum ROI and seamless alignment with your existing workflows.
                             </p>
-                            <a href="#contact" class="mt-auto w-full text-center gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-6 rounded-lg">Speak to a sales rep</a>
+                            <a href="#contact" class="mt-auto w-full text-center gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-6 rounded-lg">Meet With Us</a>
                         </div>
-                
+        
                         
-                        <div class="md:w-1/2 md:pl-8 mt-8 md:mt-0 md:border-l text-left">
-                             <h5 class="text-xl font-semibold text-main mb-4">What's Included:</h5>
-                             <ul class="space-y-4 text-subtle">
+                        <div class="md:w-1/2 md:pl-8 mt-8 md:mt-0 md:border-l md:border-slate-200/80 text-left">
+                             <h5 class="text-xl font-semibold text-slate-900 mb-4">What's Included:</h5>
+                             <ul class="space-y-4 text-slate-600">
                                  <li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 mr-3 mt-1 flex-shrink-0 glow-green-icon"></i><span><strong>Unlimited Scale & Usage:</strong> No caps on leads, outreach, or agent operation time.</span></li>
                                  <li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 mr-3 mt-1 flex-shrink-0 glow-green-icon"></i><span><strong>Custom Integrations & Setup:</strong> Deep integration with your proprietary systems and CRMs.</span></li>
                                  <li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 mr-3 mt-1 flex-shrink-0 glow-green-icon"></i><span><strong>Dedicated Strategic Support:</strong> A dedicated account manager and access to AI strategists.</span></li>
@@ -607,15 +601,16 @@
     </main>
 
     
-<footer class="section-bg border-t">
-    <div class="container mx-auto px-6 py-8">
+
+<footer id="footer-sky" class="relative overflow-hidden border-t border-transparent pt-12">
+    <div class="relative z-10 container mx-auto px-6 py-8">
         <div class="flex flex-col md:flex-row justify-between items-center">
-            <h2 class="text-xl font-bold text-main tracking-tight">sales-rep<span class="gradient-text font-bold">.ai</span></h2>
-            <p class="text-subtle mt-4 md:mt-0">&copy; 2024 sales-rep.ai. All rights reserved.</p>
+            <h2 class="text-xl font-bold text-slate-900 tracking-tight">sales-rep<span class="gradient-text font-bold">.ai</span></h2>
+            <p class="text-slate-600 mt-4 md:mt-0">&copy; 2024 sales-rep.ai. All rights reserved.</p>
             <div class="flex space-x-4 mt-4 md:mt-0">
-                <a href="#" class="text-subtle hover:text-blue-500"><i data-lucide="twitter"></i></a>
-                <a href="#" class="text-subtle hover:text-blue-500"><i data-lucide="linkedin"></i></a>
-                <a href="#" class="text-subtle hover:text-blue-500"><i data-lucide="github"></i></a>
+                <a href="#" class="text-slate-500 hover:text-blue-500"><i data-lucide="twitter"></i></a>
+                <a href="#" class="text-slate-500 hover:text-blue-500"><i data-lucide="linkedin"></i></a>
+                <a href="#" class="text-slate-500 hover:text-blue-500"><i data-lucide="github"></i></a>
             </div>
         </div>
     </div>
@@ -626,15 +621,102 @@
         lucide.createIcons();
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Header Scroll Effect
-            const header = document.querySelector('header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 10) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
+            // Starfield Canvas Animation
+            const canvas = document.getElementById('starfield');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+
+                const resizeCanvas = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                const stars = [];
+                const numStars = 300; // Fewer stars for a dawn sky
+                for (let i = 0; i < numStars; i++) {
+                    stars.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 1.0 + 0.3,
+                        alpha: Math.random() * 0.7, // More subtle stars
+                        velocity: {
+                            y: Math.random() * 0.1 + 0.05
+                        }
+                    });
                 }
-            });
+                
+                const shootingStars = [];
+
+                const createShootingStar = () => {
+                    // Create a new shooting star at random intervals
+                    if (Math.random() < 0.01 && shootingStars.length < 2) { 
+                        shootingStars.push({
+                            x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1, 
+                            y: Math.random() * canvas.height * 0.2, 
+                            len: Math.random() * 50 + 20,
+                            speed: Math.random() * 6 + 5,
+                            angle: Math.PI / 4.5, // slightly different angle
+                            opacity: 0.8 // Start a bit fainter
+                        });
+                    }
+                }
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    // Draw stars
+                    stars.forEach(star => {
+                        star.y += star.velocity.y;
+                        if (star.y > canvas.height + star.radius) {
+                            star.x = Math.random() * canvas.width;
+                            star.y = -star.radius;
+                        }
+
+                        // Twinkle effect
+                        star.alpha += (Math.random() - 0.5) * 0.08;
+                        star.alpha = Math.max(0.1, Math.min(0.7, star.alpha));
+
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                        // Faint, slightly blue stars for the dawn sky
+                        ctx.fillStyle = `rgba(107, 114, 128, ${star.alpha * 0.5})`;
+                        ctx.fill();
+                    });
+                    
+                    // Create and draw shooting stars
+                    createShootingStar();
+                    shootingStars.forEach((ss, index) => {
+                        ss.x += ss.speed * Math.cos(ss.angle);
+                        ss.y += ss.speed * Math.sin(ss.angle);
+                        ss.opacity -= 0.015;
+
+                        if (ss.opacity <= 0 || ss.x > canvas.width || ss.y > canvas.height) {
+                            shootingStars.splice(index, 1);
+                        } else {
+                             ctx.beginPath();
+                             const tailX = ss.x - ss.len * Math.cos(ss.angle);
+                             const tailY = ss.y - ss.len * Math.sin(ss.angle);
+                             ctx.moveTo(tailX, tailY);
+                             ctx.lineTo(ss.x, ss.y);
+
+                             // Golden-hour colored shooting star
+                             const gradient = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
+                             gradient.addColorStop(0, 'rgba(251, 191, 36, 0)');
+                             gradient.addColorStop(1, `rgba(251, 191, 36, ${ss.opacity})`);
+                             
+                             ctx.strokeStyle = gradient;
+                             ctx.lineWidth = 1.5;
+                             ctx.stroke();
+                        }
+                    });
+
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+
 
             // Intersection Observer for fade-up animations
             const observer = new IntersectionObserver((entries) => {
@@ -644,7 +726,7 @@
                     }
                 });
             }, {
-                threshold: 0.15
+                threshold: 0.15 // Trigger a bit earlier for smoother fade
             });
 
             const elementsToFade = document.querySelectorAll('.fade-up');
@@ -656,7 +738,9 @@
             const emailBodyBox = document.getElementById('email-body-box');
             const crmNoteBox = document.getElementById('crm-note');
             const leadStatusEl = document.getElementById('lead-status');
-            
+            const enrichmentContainer = document.getElementById('enrichment-data');
+
+
             if (smsChatBox && emailBodyBox && crmNoteBox && leadStatusEl) {
                 const smsConversation = [
                     { sender: 'ai', text: 'Hi Sarah. Following up on our chat about the warehouse expansion. Have you had a chance to look at financing options?' },
@@ -678,13 +762,14 @@
 
                 const crmNote = "Lead confirmed interest in financing options for $500k project. Provided key details (revenue: $2.2M). Initiating outreach to lending partners. Status changed to 'Quoting'.";
 
+
                 let currentSmsIndex = 0;
 
                 const createBubble = (sender, textEl) => {
                     const bubbleWrapper = document.createElement('div');
                     bubbleWrapper.className = `flex ${sender === 'ai' ? 'justify-start' : 'justify-end'}`;
                     const bubble = document.createElement('div');
-                    bubble.className = `chat-bubble p-3 rounded-2xl max-w-xs md:max-w-sm ${sender === 'ai' ? 'ai' : 'user'}`;
+                    bubble.className = `chat-bubble p-3 rounded-2xl max-w-xs md:max-w-sm ${sender === 'ai' ? 'bg-slate-200 rounded-bl-lg' : 'gradient-bg text-white rounded-br-lg'}`;
                     bubble.appendChild(textEl);
                     bubbleWrapper.appendChild(bubble);
                     smsChatBox.appendChild(bubbleWrapper);
@@ -764,7 +849,7 @@
                 const typeCrmNote = () => {
                     crmNoteBox.innerHTML = '';
                     leadStatusEl.textContent = "Contacted";
-                    leadStatusEl.className = "px-3 py-1 text-sm font-semibold rounded-full bg-yellow-400/20 text-yellow-600";
+                    leadStatusEl.className = "px-3 py-1 text-sm font-semibold rounded-full bg-yellow-500/20 text-yellow-600";
 
                     const textEl = document.createElement('p');
                     crmNoteBox.appendChild(textEl);
@@ -780,7 +865,7 @@
                         } else {
                             setTimeout(() => {
                                 leadStatusEl.textContent = "Quoting";
-                                leadStatusEl.className = "px-3 py-1 text-sm font-semibold rounded-full bg-teal-400/20 text-teal-600 animate-pulse";
+                                leadStatusEl.className = "px-3 py-1 text-sm font-semibold rounded-full bg-teal-500/20 text-teal-500 animate-pulse";
                             }, 500);
                            setTimeout(typeCrmNote, 15000); 
                         }
@@ -819,6 +904,7 @@
                 };
 
                 const typeReportInsights = () => {
+                    // Reset state
                     reportInsightsBox.innerHTML = '';
                     kpiLeads.innerText = '0';
                     kpiMeetings.innerText = '0';
@@ -829,13 +915,16 @@
                     barReferral.innerText = '';
                     barCold.innerText = '';
                     
+                    // Animate KPIs
                     setTimeout(() => animateValue(kpiLeads, 0, 1482, 1500), 500);
                     setTimeout(() => animateValue(kpiMeetings, 0, 97, 1500), 700);
 
+                    // Animate bars
                     setTimeout(() => { barWeb.style.width = '45%'; barWeb.innerText = '45%'; }, 1000);
                     setTimeout(() => { barReferral.style.width = '75%'; barReferral.innerText = '75%'; }, 1200);
                     setTimeout(() => { barCold.style.width = '20%'; barCold.innerText = '20%'; }, 1400);
 
+                    // Animate text
                     const textEl = document.createElement('p');
                     reportInsightsBox.appendChild(textEl);
                     
@@ -848,10 +937,10 @@
                             charIndex++;
                             setTimeout(typeChar, typingSpeed);
                         } else {
-                           setTimeout(typeReportInsights, 15000);
+                           setTimeout(typeReportInsights, 15000); // Loop the animation
                         }
                     }
-                    setTimeout(typeChar, 2000);
+                    setTimeout(typeChar, 2000); // Start typing after charts are animated
                 };
 
                 barWeb.style.transition = 'width 1s ease-in-out';
@@ -867,24 +956,39 @@
             const demoScreen = document.getElementById('demo-screen');
 
             if (enrichmentContainerNew && demoScreen) {
-                 const enrichedData = [
-                    { action: 'type', targetId: 'fake-search-bar', text: 'Innovate Corp. key contacts' },
-                    { action: 'click', targetId: 'fake-link-1'},
-                    { action: 'update', targetItemIndex: 1, html: `<i data-lucide="briefcase" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-subtle">Industry: <span class="text-main ml-2 font-semibold">Logistics & Supply Chain</span></span>` },
-                    { action: 'update', targetItemIndex: 6, html: `<i data-lucide="calendar-days" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-subtle">Business Start Date: <span class="text-main ml-2 font-semibold">2016</span></span>`},
-                    { action: 'click', targetId: 'fake-article' },
-                    { action: 'update', targetItemIndex: 2, html: `<i data-lucide="newspaper" class="w-5 h-5 mr-3 text-blue-500 flex-shrink-0 mt-1"></i><span class="text-subtle">Recent News: <span class="text-main ml-2 font-semibold">Secured Series B funding for warehouse expansion.</span></span>`},
-                    { action: 'click', targetId: 'fake-profile' },
-                    { action: 'update', targetItemIndex: 0, html: `<i data-lucide="info" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-subtle">Contact: <span class="text-main ml-2 font-semibold">Sarah Connor, COO</span></span>`},
-                    { action: 'click', targetId: 'fake-database'},
-                    { action: 'update', targetItemIndex: 5, html: `<i data-lucide="file-text" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-subtle">UCC Filings: <span class="text-main ml-2 font-semibold">3 Active</span></span>`},
-                    { action: 'click', targetId: 'fake-report'},
-                    { action: 'update', targetItemIndex: 3, html: `<i data-lucide="lightbulb" class="w-5 h-5 mr-3 text-blue-500 flex-shrink-0 mt-1"></i><span class="text-subtle">Buying Signals: <span class="text-main ml-2 font-semibold">Actively hiring for logistics roles.</span></span>`},
+                const enrichedData = [
+                    { 
+                        targetId: 'fake-search-bar',
+                        html: `<i data-lucide="info" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-slate-500">Contact: <span class="text-slate-800 ml-2 font-semibold">Sarah Connor, COO</span></span>`
+                    },
+                    {
+                        targetId: 'fake-link-2',
+                        html: `<i data-lucide="briefcase" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-slate-500">Industry: <span class="text-slate-800 ml-2 font-semibold">Logistics & Supply Chain</span></span>`
+                    },
+                    {
+                        targetId: 'fake-article',
+                        html: `<i data-lucide="newspaper" class="w-5 h-5 mr-3 text-blue-500 flex-shrink-0 mt-1"></i><span class="text-slate-500">Recent News: <span class="text-slate-800 ml-2 font-semibold">Secured Series B funding for warehouse expansion.</span></span>`
+                    },
+                     {
+                        targetId: 'fake-report',
+                        html: `<i data-lucide="lightbulb" class="w-5 h-5 mr-3 text-blue-500 flex-shrink-0 mt-1"></i><span class="text-slate-500">Buying Signals: <span class="text-slate-800 ml-2 font-semibold">Actively hiring for logistics roles.</span></span>`
+                    },
+                    {
+                        targetId: 'fake-search-bar',
+                        html: `<i data-lucide="hash" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-slate-500">NAICS Code: <span class="text-slate-800 ml-2 font-semibold">493110</span></span>`
+                    },
+                    {
+                        targetId: 'fake-database',
+                        html: `<i data-lucide="file-text" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-slate-500">UCC Filings: <span class="text-slate-800 ml-2 font-semibold">3 Active</span></span>`
+                    },
+                    {
+                        targetId: 'fake-link-1',
+                        html: `<i data-lucide="calendar-days" class="w-5 h-5 mr-3 text-blue-500"></i><span class="text-slate-500">Business Start Date: <span class="text-slate-800 ml-2 font-semibold">2016</span></span>`
+                    }
                 ];
 
                 const initialItemsHTML = Array.from(enrichmentContainerNew.querySelectorAll('.enrichment-item')).map(item => item.innerHTML);
                 const mouseCursor = document.getElementById('mouse-cursor');
-                const searchBarText = document.getElementById('fake-search-bar-text');
 
                 const runEnrichmentAnimation = async () => {
                     const enrichmentItems = enrichmentContainerNew.querySelectorAll('.enrichment-item');
@@ -896,91 +1000,74 @@
                     });
                     lucide.createIcons();
 
-                    demoScreen.querySelectorAll('[id^="fake-"]').forEach(el => {
-                        el.classList.remove('bg-blue-300');
-                        if(el.id === 'fake-profile') el.style.opacity = '0';
-                        if(el.id === 'fake-article') el.style.opacity = '1';
-                    });
-                    searchBarText.textContent = '';
+                    // Reset fake UI
+                    demoScreen.querySelectorAll('[id^="fake-"]').forEach(el => el.classList.remove('bg-blue-300'));
 
 
                     await new Promise(res => setTimeout(res, 1000));
 
-                    for(const step of enrichedData) {
-                        if (step.action === 'type') {
-                            const targetEl = document.getElementById(step.targetId);
-                            const rect = targetEl.getBoundingClientRect();
-                            const screenRect = demoScreen.getBoundingClientRect();
-                            const x = rect.left - screenRect.left + 20;
-                            const y = rect.top - screenRect.top + (rect.height / 2);
+                    for(let i = 0; i < enrichedData.length; i++) {
+                        const data = enrichedData[i];
+                        const targetEl = document.getElementById(data.targetId);
+                        const targetItem = enrichmentItems[i];
 
-                            mouseCursor.style.transitionDuration = `300ms`;
-                            mouseCursor.style.left = `${x}px`;
-                            mouseCursor.style.top = `${y}px`;
-                            await new Promise(res => setTimeout(res, 300));
+                        const rect = targetEl.getBoundingClientRect();
+                        const screenRect = demoScreen.getBoundingClientRect();
 
-                            for(let i = 0; i < step.text.length; i++) {
-                                searchBarText.textContent += step.text[i];
-                                await new Promise(res => setTimeout(res, 50 + Math.random() * 50));
-                            }
-                            await new Promise(res => setTimeout(res, 500));
-                        }
-                        else if (step.action === 'click') {
-                            const targetEl = document.getElementById(step.targetId);
-                             if (step.targetId === 'fake-article') {
-                                document.getElementById('fake-article').style.opacity = 0;
-                                document.getElementById('fake-profile').style.opacity = 1;
-                            }
-                            
-                            const rect = targetEl.getBoundingClientRect();
-                            const screenRect = demoScreen.getBoundingClientRect();
-                            const x = rect.left - screenRect.left + (rect.width / 2);
-                            const y = rect.top - screenRect.top + (rect.height / 2);
-                            
-                            const duration = Math.random() * 400 + 300;
-                            mouseCursor.style.transitionDuration = `${duration}ms`;
-                            mouseCursor.style.left = `${x}px`;
-                            mouseCursor.style.top = `${y}px`;
-                            await new Promise(res => setTimeout(res, duration));
-                            
-                            const ripple = document.createElement('div');
-                            ripple.className = 'absolute rounded-full';
-                            ripple.style.width = '25px';
-                            ripple.style.height = '25px';
-                            ripple.style.border = '2px solid rgba(59, 130, 246, 0.7)';
-                            ripple.style.left = `${x - 12.5}px`;
-                            ripple.style.top = `${y - 12.5}px`;
-                            ripple.style.transform = 'scale(0)';
-                            ripple.style.opacity = '1';
-                            ripple.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
-                            ripple.style.pointerEvents = 'none';
-                            demoScreen.appendChild(ripple);
+                        const x = rect.left - screenRect.left + (rect.width / 2);
+                        const y = rect.top - screenRect.top + (rect.height / 2);
+                        
+                        // Move mouse
+                        const duration = Math.random() * 500 + 400;
+                        mouseCursor.style.transitionDuration = `${duration}ms`;
+                        mouseCursor.style.left = `${x}px`;
+                        mouseCursor.style.top = `${y}px`;
 
-                            setTimeout(() => {
-                                ripple.style.transform = 'scale(1.5)';
-                                ripple.style.opacity = '0';
-                            }, 10);
+                        await new Promise(res => setTimeout(res, duration));
+                        
+                        // Create and animate a click ripple effect
+                        const ripple = document.createElement('div');
+                        ripple.className = 'absolute rounded-full';
+                        ripple.style.width = '25px';
+                        ripple.style.height = '25px';
+                        ripple.style.border = '2px solid rgba(59, 130, 246, 0.6)';
+                        ripple.style.left = `${x - 12.5}px`; 
+                        ripple.style.top = `${y - 12.5}px`;
+                        ripple.style.transform = 'scale(0)';
+                        ripple.style.opacity = '1';
+                        ripple.style.transition = 'transform 0.4s ease-out, opacity 0.4s ease-out';
+                        ripple.style.pointerEvents = 'none';
+                        demoScreen.appendChild(ripple);
 
-                            setTimeout(() => {
-                                if (ripple) ripple.remove();
-                            }, 410);
+                        // Trigger the animation
+                        setTimeout(() => {
+                            ripple.style.transform = 'scale(1.5)';
+                            ripple.style.opacity = '0';
+                        }, 10);
 
-                            mouseCursor.style.transform = 'scale(0.8)';
-                            targetEl.classList.add('bg-blue-300');
+                        // Remove the ripple after animation
+                        setTimeout(() => {
+                            if (ripple) ripple.remove();
+                        }, 410);
 
-                            await new Promise(res => setTimeout(res, 150));
-                            mouseCursor.style.transform = 'scale(1)';
+                        // Click effect
+                        mouseCursor.style.transform = 'scale(0.8)';
+                        targetEl.classList.add('bg-blue-300');
 
-                            await new Promise(res => setTimeout(res, 500));
-                        } 
-                        else if (step.action === 'update') {
-                            const targetItem = enrichmentItems[step.targetItemIndex];
-                            targetItem.innerHTML = step.html;
-                            lucide.createIcons();
-                            targetItem.style.opacity = '1';
-                            targetItem.style.transform = 'translateX(0)';
-                            await new Promise(res => setTimeout(res, 800));
-                        }
+                        await new Promise(res => setTimeout(res, 150));
+                        mouseCursor.style.transform = 'scale(1)';
+
+                        await new Promise(res => setTimeout(res, 500)); // Pause after click
+
+                        // Show result
+                        targetItem.innerHTML = data.html;
+                        lucide.createIcons();
+                        targetItem.style.opacity = '1';
+                        targetItem.style.transform = 'translateX(0)';
+
+                        await new Promise(res => setTimeout(res, 1000));
+                        targetEl.classList.remove('bg-blue-300');
+
                     }
                     
                     await new Promise(res => setTimeout(res, 8000));
@@ -991,13 +1078,14 @@
                     item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
                 });
 
+                // Style for cursor transitions
                  const style = document.createElement('style');
                 style.innerHTML = `
                     #mouse-cursor { 
                         transform-origin: top left;
                         transition: top 0.5s cubic-bezier(0.65, 0, 0.35, 1), left 0.5s cubic-bezier(0.65, 0, 0.35, 1), transform 0.1s ease;
                     }
-                    [id^="fake-"] { transition: background-color 0.2s ease, opacity 0.3s ease-in-out; }
+                    [id^="fake-"] { transition: background-color 0.2s ease; }
                 `;
                 document.head.appendChild(style);
 
@@ -1005,89 +1093,9 @@
                 runEnrichmentAnimation();
             }
 
-            // Starfield Animation Logic
-            const canvas = document.getElementById('starfield');
-            let animationFrameId;
-
-            const startStarfield = () => {
-                const ctx = canvas.getContext('2d');
-                const resizeCanvas = () => {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                };
-                window.addEventListener('resize', resizeCanvas);
-                resizeCanvas();
-                const stars = [];
-                const numStars = 500;
-                for (let i = 0; i < numStars; i++) {
-                    stars.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, radius: Math.random() * 1.2 + 0.5, alpha: Math.random(), velocity: { y: Math.random() * 0.2 + 0.1 } });
-                }
-                const shootingStars = [];
-                const createShootingStar = () => {
-                    if (Math.random() < 0.015 && shootingStars.length < 3) {
-                        shootingStars.push({ x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1, y: Math.random() * canvas.height * 0.2, len: Math.random() * 60 + 20, speed: Math.random() * 8 + 6, angle: Math.PI / 4, opacity: 1 });
-                    }
-                }
-                const animate = () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    stars.forEach(star => {
-                        star.y += star.velocity.y;
-                        if (star.y > canvas.height + star.radius) { star.x = Math.random() * canvas.width; star.y = -star.radius; }
-                        star.alpha += (Math.random() - 0.5) * 0.1;
-                        star.alpha = Math.max(0.1, Math.min(1, star.alpha));
-                        ctx.beginPath();
-                        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`;
-                        ctx.fill();
-                    });
-                    createShootingStar();
-                    shootingStars.forEach((ss, index) => {
-                        ss.x += ss.speed * Math.cos(ss.angle);
-                        ss.y += ss.speed * Math.sin(ss.angle);
-                        ss.opacity -= 0.015;
-                        if (ss.opacity <= 0 || ss.x > canvas.width || ss.y > canvas.height) {
-                            shootingStars.splice(index, 1);
-                        } else {
-                            const tailX = ss.x - ss.len * Math.cos(ss.angle);
-                            const tailY = ss.y - ss.len * Math.sin(ss.angle);
-                            ctx.beginPath();
-                            ctx.moveTo(tailX, tailY);
-                            ctx.lineTo(ss.x, ss.y);
-                            const gradient = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
-                            gradient.addColorStop(0, 'rgba(255, 255, 255, 0)');
-                            gradient.addColorStop(1, `rgba(255, 255, 255, ${ss.opacity})`);
-                            ctx.strokeStyle = gradient;
-                            ctx.lineWidth = 1.5;
-                            ctx.stroke();
-                        }
-                    });
-                    animationFrameId = requestAnimationFrame(animate);
-                };
-                animate();
-            }
-            const stopStarfield = () => {
-                if (animationFrameId) {
-                    cancelAnimationFrame(animationFrameId);
-                    animationFrameId = null;
-                    const ctx = canvas.getContext('2d');
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
-            }
-
-            document.getElementById('theme-toggle').addEventListener('click', () => {
-                document.body.classList.toggle('dark-mode');
-                if (document.body.classList.contains('dark-mode')) {
-                    if (!animationFrameId) startStarfield();
-                } else {
-                    stopStarfield();
-                }
-            });
-
         });
     </script>
 </body>
 
 </html>
-
-
 

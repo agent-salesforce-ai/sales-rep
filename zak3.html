@@ -130,6 +130,11 @@
             animation: float 6s ease-in-out infinite;
             display: inline-block; /* Needed for transform to apply correctly */
         }
+
+        .glow-text {
+             filter: drop-shadow(0 0 2px rgba(45, 212, 191, 0.3)) 
+                     drop-shadow(0 0 5px rgba(59, 130, 246, 0.15));
+        }
         
         /* Demo Section Styles */
         .demo-container {
@@ -207,19 +212,18 @@
         <div class="relative">
             <div class="hero-section-dark pt-32 pb-48" style="height: 800px;">
                  <div class="absolute inset-0 w-full h-full pointer-events-none z-10">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="hero-logo" style="top: 25%; left: 2%; width: 80px; animation-delay: 0s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce" class="hero-logo" style="top: 20%; left: 18%; width: 100px; animation-delay: -0.2s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="hero-logo" style="top: 25%; left: 40%; width: 125px; animation-delay: -0.5s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude" class="hero-logo" style="top: 10%; right: 35%; width: 110px; animation-delay: -1.2s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot" class="hero-logo" style="top: 30%; right: 15%; width: 90px; animation-delay: -1s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini" class="hero-logo" style="top: 15%; right: 8%; width: 90px; animation-delay: -2s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier" class="hero-logo" style="top: 60%; left: 8%; width: 95px; animation-delay: -0.8s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="hero-logo" style="top: 60%; right: 8%; width: 120px; animation-delay: -5.5s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho" class="hero-logo" style="top: 20%; right: 30%; width: 80px; animation-delay: -3s;">
-                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall" class="hero-logo" style="top: 70%; left: 50%; transform: translateX(-50%); width: 90px; animation-delay: -4s;">
-                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="hero-logo" style="top: 10%; left: 32%; width: 75px; animation-delay: -1.5s;">
-                     <img src="https://www.svgrepo.com/show/354352/slack.svg" alt="Slack" class="hero-logo" style="top: 75%; right: 25%; width: 90px; animation-delay: -3.5s;">
-                     <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord" class="hero-logo" style="top: 45%; left: 5%; width: 65px; animation-delay: -2.5s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="hero-logo" style="top: 25%; left: 2%; width: 80px; animation-delay: 0s;" data-speed="0.2">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce" class="hero-logo" style="top: 20%; left: 18%; width: 100px; animation-delay: -0.2s;" data-speed="-0.15">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="hero-logo" style="top: 25%; left: 40%; width: 125px; animation-delay: -0.5s;" data-speed="0.1">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude" class="hero-logo" style="top: 10%; right: 35%; width: 110px; animation-delay: -1.2s;" data-speed="0.25">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot" class="hero-logo" style="top: 30%; right: 15%; width: 90px; animation-delay: -1s;" data-speed="-0.2">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini" class="hero-logo" style="top: 15%; right: 8%; width: 90px; animation-delay: -2s;" data-speed="0.18">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier" class="hero-logo" style="top: 60%; left: 8%; width: 95px; animation-delay: -0.8s;" data-speed="-0.1">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="hero-logo" style="top: 60%; right: 8%; width: 120px; animation-delay: -5.5s;" data-speed="0.15">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho" class="hero-logo" style="top: 20%; right: 30%; width: 80px; animation-delay: -3s;" data-speed="-0.25">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall" class="hero-logo" style="top: 70%; left: 50%; transform: translateX(-50%); width: 90px; animation-delay: -4s;" data-speed="0.1">
+                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="hero-logo" style="top: 75%; left: 25%; width: 90px; animation-delay: -1.5s;" data-speed="-0.1">
+                     <img src="https://www.svgrepo.com/show/354352/slack.svg" alt="Slack" class="hero-logo" style="top: 75%; right: 25%; width: 90px; animation-delay: -3.5s;" data-speed="-0.15">
                  </div>
             </div>
 
@@ -227,7 +231,7 @@
                 <div class="container mx-auto px-6 text-center">
                     <div class="relative z-10">
                         <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-slate-100 fade-up">
-                            <span class="gradient-text">Close Deals While You Sleep</span>
+                            <span class="gradient-text glow-text">Close Deals While You Sleep</span>
                         </h2>
                         <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-300 mb-8 fade-up" style="transition-delay: 150ms;">
                             ...because your sales team now operates 24/7
@@ -614,6 +618,24 @@
                 typeSmsMessage();
                 setTimeout(typeEmail, 3000); // Stagger the start of the email animation
             }
+
+            // Parallax scroll for logos
+            const logosWithInitialTops = [];
+            document.querySelectorAll('.hero-logo').forEach(logo => {
+                logosWithInitialTops.push({
+                    element: logo,
+                    initialTop: logo.style.top,
+                    speed: parseFloat(logo.getAttribute('data-speed')) || 0
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                logosWithInitialTops.forEach(item => {
+                    const offset = scrollY * item.speed;
+                    item.element.style.top = `calc(${item.initialTop} + ${offset}px)`;
+                });
+            }, { passive: true });
         });
     </script>
 </body>

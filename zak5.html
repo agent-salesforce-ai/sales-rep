@@ -26,16 +26,6 @@
             position: relative;
         }
 
-        #starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -10;
-            pointer-events: none;
-        }
-
         .gradient-text {
             background: linear-gradient(90deg, #2dd4bf, #3b82f6, #8b5cf6);
             -webkit-background-clip: text;
@@ -57,20 +47,52 @@
             opacity: 0.95;
         }
         
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        @keyframes meteor-travel {
+            0% {
+                transform: scale(0.3) translate(100px, -100px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.2) translate(-100px, 100px);
+                opacity: 0;
+            }
         }
 
         .hero-logo {
             position: absolute;
-            animation: float 6s ease-in-out infinite;
-            transition: all 0.3s ease;
+            animation: meteor-travel 10s ease-in-out infinite;
             background-color: transparent;
             filter: brightness(0) invert(1) drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.4));
             mix-blend-mode: screen;
-            opacity: 0.8;
+            opacity: 0; /* Animation handles opacity */
+        }
+        
+        .hero-logo-text {
+             font-size: 1.1rem;
+             font-weight: 500;
+        }
+
+        .hero-section-dark {
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
         }
 
         /* Updated animation for a "traveling at you" effect */
@@ -112,15 +134,9 @@
             -webkit-text-fill-color: white;
         }
 
-        @keyframes float-header {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
-        }
-        
         .header-logo-float {
-            animation: float-header 6s ease-in-out infinite;
-            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+            display: inline-block; /* Needed for transform to apply correctly */
         }
 
         .white-glow-text {
@@ -188,13 +204,18 @@
 
         @media (max-width: 1024px) {
             .hero-logo { display: none; }
+            .hero-section-dark {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+                height: auto !important;
+            }
         }
 
     </style>
 </head>
 
 <body class="antialiased text-slate-300"> 
-<canvas id="starfield"></canvas>
+<div id="star-container" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></div>
 
 <header class="fixed top-0 left-0 right-0 z-50 header-fade">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -210,44 +231,51 @@
         </div>
     </header>
 
-    <main class="relative z-10">
+    <main>
         
-        <section class="relative pt-32 pb-48 flex items-center justify-center" style="height: 800px;"> 
-            <div id="logo-container" class="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="hero-logo" style="top: 25%; left: 2%; width: 80px; animation-delay: 0s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce" class="hero-logo" style="top: 20%; left: 18%; width: 100px; animation-delay: -1.2s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="hero-logo" style="top: 25%; left: 40%; width: 125px; animation-delay: -2.5s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude" class="hero-logo" style="top: 10%; right: 35%; width: 110px; animation-delay: -3.2s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot" class="hero-logo" style="top: 30%; right: 15%; width: 90px; animation-delay: -4s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini" class="hero-logo" style="top: 15%; right: 8%; width: 90px; animation-delay: -5.2s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier" class="hero-logo" style="top: 70%; left: 8%; width: 95px; animation-delay: -6.8s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="hero-logo" style="top: 60%; right: 8%; width: 120px; animation-delay: -7.5s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho" class="hero-logo" style="top: 50%; left: 10%; width: 80px; animation-delay: -8s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall" class="hero-logo" style="top: 80%; left: 50%; width: 90px; animation-delay: -9.4s;">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="hero-logo" style="top: 85%; left: 25%; width: 90px; animation-delay: -1.8s;">
-                <img src="https://www.svgrepo.com/show/354352/slack.svg" alt="Slack" class="hero-logo" style="top: 85%; right: 25%; width: 90px; animation-delay: -0.5s;">
+        <div class="relative">
+            <div class="hero-section-dark pt-32 pb-48" style="height: 800px;">
+                 <div class="absolute inset-0 w-full h-full pointer-events-none z-10">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="hero-logo" style="top: 25%; left: 2%; width: 80px; animation-delay: 0s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce" class="hero-logo" style="top: 20%; left: 18%; width: 100px; animation-delay: -1.2s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="hero-logo" style="top: 25%; left: 40%; width: 125px; animation-delay: -2.5s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude" class="hero-logo" style="top: 10%; right: 35%; width: 110px; animation-delay: -3.2s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot" class="hero-logo" style="top: 30%; right: 15%; width: 90px; animation-delay: -4s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini" class="hero-logo" style="top: 15%; right: 8%; width: 90px; animation-delay: -5.2s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier" class="hero-logo" style="top: 60%; left: 8%; width: 95px; animation-delay: -6.8s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="hero-logo" style="top: 60%; right: 8%; width: 120px; animation-delay: -7.5s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho" class="hero-logo" style="top: 20%; right: 30%; width: 80px; animation-delay: -8s;">
+                     <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall" class="hero-logo" style="top: 70%; left: 50%; width: 90px; animation-delay: -9.4s;">
+                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="hero-logo" style="top: 75%; left: 25%; width: 90px; animation-delay: -1.8s;">
+                     <img src="https://www.svgrepo.com/show/354352/slack.svg" alt="Slack" class="hero-logo" style="top: 75%; right: 25%; width: 90px; animation-delay: -0.5s;">
+                 </div>
             </div>
-            <div class="container mx-auto px-6 text-center">
-                <div class="relative z-10">
-                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-slate-100 fade-up">
-                        <span class="white-glow-text">Close Deals While You Sleep</span>
-                    </h2>
-                    <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-300 mb-8 fade-up" style="transition-delay: 150ms;">
-                        ...because your sales team now operates 24/7
-                    </p>
-                    <div class="flex justify-center space-x-4 fade-up" style="transition-delay: 300ms;">
-                        <a href="#contact" class="gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-8 rounded-lg text-lg">
-                            Request a Demo
-                        </a>
-                        <a href="#how-it-works" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 px-8 rounded-lg text-lg transition-colors border border-slate-700">
-                            Learn More
-                        </a>
+
+            <section class="absolute top-0 left-0 w-full h-full flex items-center justify-center"> 
+                <div class="container mx-auto px-6 text-center">
+                    <div class="relative z-10">
+                        <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-slate-100 fade-up">
+                            <span class="gradient-text">Close Deals While You Sleep</span>
+                        </h2>
+                        <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-300 mb-8 fade-up" style="transition-delay: 150ms;">
+                            ...because your sales team now operates 24/7
+                        </p>
+                        <div class="flex justify-center space-x-4 fade-up" style="transition-delay: 300ms;">
+                            <a href="#contact" class="gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-8 rounded-lg text-lg">
+                                Request a Demo
+                            </a>
+                            <a href="#how-it-works" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 px-8 rounded-lg text-lg transition-colors border border-slate-700">
+                                Learn More
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
         
-        <section id="how-it-works" class="py-20"> 
+        
+
+<section id="how-it-works" class="py-20"> 
 
 <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-up">
@@ -498,55 +526,22 @@
         lucide.createIcons();
 
         document.addEventListener('DOMContentLoaded', function() {
-            const starfield = document.getElementById('starfield');
-            const ctx = starfield.getContext('2d');
-            let stars = [];
-            const numStars = 500;
-            let speed = 2;
-
-            function init() {
-                starfield.width = window.innerWidth;
-                starfield.height = window.innerHeight;
-                stars = [];
-                for (let i = 0; i < numStars; i++) {
-                    stars.push({
-                        x: Math.random() * starfield.width,
-                        y: Math.random() * starfield.height,
-                        z: Math.random() * starfield.width
-                    });
+            const createStars = (container, starCount) => {
+                if (!container) return;
+                const pageHeight = document.documentElement.scrollHeight;
+                for (let i = 0; i < starCount; i++) {
+                    let star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.top = `${Math.random() * pageHeight}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.animationDuration = `${Math.random() * 3 + 1}s`;
+                    star.style.animationDelay = `${Math.random() * 3}s`;
+                    container.appendChild(star);
                 }
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, starfield.width, starfield.height);
-                const centerX = starfield.width / 2;
-                const centerY = starfield.height / 2;
-
-                stars.forEach(star => {
-                    star.z -= speed;
-                    if (star.z <= 0) {
-                        star.z = starfield.width;
-                        star.x = Math.random() * starfield.width;
-                        star.y = Math.random() * starfield.height;
-                    }
-
-                    const k = 128 / star.z;
-                    const px = (star.x - centerX) * k + centerX;
-                    const py = (star.y - centerY) * k + centerY;
-                    const size = (1 - star.z / starfield.width) * 2;
-                    
-                    ctx.beginPath();
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                    ctx.arc(px, py, size, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                requestAnimationFrame(animate);
-            }
-
-            window.addEventListener('resize', init);
-            init();
-            animate();
+            };
+            
+            const starContainer = document.getElementById('star-container');
+            createStars(starContainer, 800);
 
             // Intersection Observer for fade-up animations
             const observer = new IntersectionObserver((entries) => {
@@ -649,6 +644,24 @@
                 typeSmsMessage();
                 setTimeout(typeEmail, 3000); // Stagger the start of the email animation
             }
+
+            // Parallax scroll for logos
+            const logosWithInitialTops = [];
+            document.querySelectorAll('.hero-logo').forEach(logo => {
+                logosWithInitialTops.push({
+                    element: logo,
+                    initialTop: logo.style.top,
+                    speed: parseFloat(logo.getAttribute('data-speed')) || 0
+                });
+            });
+
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                logosWithInitialTops.forEach(item => {
+                    const offset = scrollY * item.speed;
+                    item.element.style.top = `calc(${item.initialTop} + ${offset}px)`;
+                });
+            }, { passive: true });
         });
     </script>
 </body>

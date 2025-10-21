@@ -62,6 +62,13 @@
             transition: all 0.3s ease;
             background-color: transparent;
             filter: brightness(0) invert(1); /* This makes the logos appear white */
+            mix-blend-mode: screen; /* This blends the white logo with the background */
+            opacity: 0.8; /* Softens the effect */
+        }
+        
+        .hero-logo-text {
+             font-size: 1.1rem;
+             font-weight: 500;
         }
 
         .hero-section-dark {
@@ -95,6 +102,36 @@
             animation: twinkle 2s infinite;
             z-index: 0;
         }
+
+        .header-fade {
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9) 20%, transparent 100%);
+        }
+
+        .login-button {
+            background: transparent;
+            border: 1px solid transparent; /* No border initially */
+            transition: all 0.3s ease;
+        }
+        .login-button span {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: color 0.3s ease;
+        }
+        .login-button:hover {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            box-shadow: 0px 4px 20px rgba(45, 212, 191, 0.4);
+        }
+        .login-button:hover span {
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: white;
+        }
+
+        .header-logo-float {
+            animation: float 6s ease-in-out infinite;
+            display: inline-block; /* Needed for transform to apply correctly */
+        }
         
         @media (max-width: 1024px) {
             .hero-logo { display: none; }
@@ -113,14 +150,13 @@
 
 <body class="antialiased">
 
-    <!-- Header --><header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <!-- Header --><header class="fixed top-0 left-0 right-0 z-50 header-fade backdrop-blur-md">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-slate-900 tracking-tight">sales-rep<span class="gradient-text font-bold">.ai</span></h1>
+            <h1 class="text-2xl font-bold text-white tracking-tight header-logo-float">sales-rep<span class="gradient-text font-bold">.ai</span></h1>
             <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#features" class="text-slate-900 hover:text-blue-500 transition-colors">Features</a>
-                <a href="#how-it-works" class="text-slate-900 hover:text-blue-500 transition-colors">How It Works</a>
-                <a href="#pricing" class="text-slate-900 hover:text-blue-500 transition-colors">Pricing</a>
-                <a href="#contact" class="gradient-bg cta-button text-white hover:text-slate-200 font-bold py-2 px-4 rounded-lg">Login</a>
+                <a href="#contact" class="login-button font-bold py-2 px-4 rounded-lg">
+                    <span>Login</span>
+                </a>
             </nav>
             <a href="#contact" class="md:hidden gradient-bg cta-button text-white hover:text-slate-200 font-bold py-2 px-4 rounded-lg">
                 Get Started
@@ -133,12 +169,15 @@
              <div class="absolute inset-0 w-full h-full pointer-events-none z-10">
                 <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="hero-logo" style="top: 35%; left: 2%; width: 80px; animation-delay: 0s;">
                 <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce" class="hero-logo" style="top: 40%; left: 18%; width: 100px; animation-delay: -0.2s;">
-                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="hero-logo" style="top: 55%; left: 35%; width: 125px; animation-delay: -0.5s;">
+                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="hero-logo" style="top: 60%; left: 35%; width: 125px; animation-delay: -0.5s;">
                 <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude" class="hero-logo" style="top: 25%; right: 35%; width: 110px; animation-delay: -1.2s;">
                 <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot" class="hero-logo" style="top: 40%; right: 15%; width: 90px; animation-delay: -1s;">
                 <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini" class="hero-logo" style="top: 25%; right: 2%; width: 90px; animation-delay: -2s;">
                 <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier" class="hero-logo" style="top: 70%; left: 8%; width: 95px; animation-delay: -0.8s;">
                 <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="hero-logo" style="top: 70%; right: 8%; width: 120px; animation-delay: -5.5s;">
+                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho" class="hero-logo" style="top: 55%; right: 30%; width: 80px; animation-delay: -3s;">
+                <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall" class="hero-logo" style="top: 75%; left: 50%; transform: translateX(-50%); width: 90px; animation-delay: -4s;">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="hero-logo" style="top: 20%; left: 30%; width: 90px; animation-delay: -1.5s;">
             </div>
         </div>
 

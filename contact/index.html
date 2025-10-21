@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - sales-rep.ai</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f9ff;
+            background: linear-gradient(180deg, 
+                #e0f2fe 0%,
+                #fce7f3 35%,
+                #fff7ed 65%,
+                #f0f9ff 100%
+            );
+            position: relative;
+            min-height: 100vh;
+        }
+
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -10;
+            pointer-events: none;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #2dd4bf, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(to right, #3b82f6, #a855f7);
+        }
+
+        .card-style {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
+        .login-button {
+            background: transparent;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .login-button span {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: color 0.3s ease;
+        }
+
+        .login-button:hover {
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            box-shadow: 0px 4px 20px rgba(45, 212, 191, 0.4);
+        }
+
+        .login-button:hover span {
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: white;
+        }
+
+        @keyframes float-header {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .header-logo-float {
+            animation: float-header 6s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            filter: blur(5px);
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 1s ease-out;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+        }
+
+        .contact-icon-box {
+            transition: all 0.3s ease;
+        }
+
+        .contact-icon-box:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .cta-button {
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 20px rgba(45, 212, 191, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 30px rgba(59, 130, 246, 0.4);
+            opacity: 0.95;
+        }
+    </style>
+</head>
+
+<body class="antialiased text-slate-800">
+    <canvas id="starfield"></canvas>
+
+    <header class="fixed top-0 left-0 right-0 z-50 bg-transparent">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html">
+                <h1 class="text-3xl font-bold text-slate-900 tracking-tight header-logo-float">
+                    sales-rep<span class="gradient-text font-bold">.ai</span>
+                </h1>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html" class="text-slate-700 hover:text-blue-600 font-medium transition-colors">Home</a>
+                <a href="index.html#features" class="text-slate-700 hover:text-blue-600 font-medium transition-colors">Features</a>
+                <a href="#contact" class="login-button font-bold py-2 px-4 rounded-lg">
+                    <span>Login</span>
+                </a>
+            </nav>
+            <a href="#contact" class="md:hidden gradient-bg cta-button text-white hover:text-slate-200 font-bold py-2 px-4 rounded-lg">
+                Get Started
+            </a>
+        </div>
+    </header>
+
+    <main class="relative z-10">
+        <section class="relative pt-32 pb-12">
+            <div class="container mx-auto px-6 text-center">
+                <div class="relative z-10 mb-8">
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tighter mb-4 text-slate-900 fade-up">
+                        <span class="gradient-text">Let's Talk</span>
+                    </h2>
+                    <p class="text-lg md:text-xl max-w-2xl mx-auto text-slate-700 mb-2 fade-up" style="transition-delay: 150ms;">
+                        Ready to transform your sales process with AI?
+                    </p>
+                    <p class="text-base max-w-2xl mx-auto text-slate-600 fade-up" style="transition-delay: 200ms;">
+                        Schedule a demo and see how our agentic AI can supercharge your team.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-8">
+            <div class="container mx-auto px-6">
+                <div class="grid md:grid-cols-3 gap-6 mb-12 max-w-5xl mx-auto">
+                    <div class="card-style p-6 rounded-xl text-center contact-icon-box fade-up">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-blue-100 mb-4 mx-auto">
+                            <i data-lucide="mail" class="text-blue-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-slate-900 mb-2">Email Us</h4>
+                        <a href="mailto:hello@sales-rep.ai" class="text-blue-600 hover:text-blue-700 font-medium">hello@sales-rep.ai</a>
+                    </div>
+
+                    <div class="card-style p-6 rounded-xl text-center contact-icon-box fade-up" style="transition-delay: 100ms;">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-teal-100 mb-4 mx-auto">
+                            <i data-lucide="phone" class="text-teal-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-slate-900 mb-2">Call Us</h4>
+                        <a href="tel:+18005551234" class="text-blue-600 hover:text-blue-700 font-medium">1-800-555-1234</a>
+                    </div>
+
+                    <div class="card-style p-6 rounded-xl text-center contact-icon-box fade-up" style="transition-delay: 200ms;">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-purple-100 mb-4 mx-auto">
+                            <i data-lucide="message-circle" class="text-purple-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-semibold text-slate-900 mb-2">Live Chat</h4>
+                        <p class="text-slate-600">Available 24/7</p>
+                    </div>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="card-style rounded-2xl p-8 md:p-12 fade-up" style="transition-delay: 300ms;">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+                                Request a <span class="gradient-text">Demo</span>
+                            </h3>
+                            <p class="text-slate-600">Fill out the form below and we'll get back to you within 24 hours</p>
+                        </div>
+                        
+                        <div style="width:100%;height:500px;" data-fillout-id="rTnCg2nCAvus" data-fillout-embed-type="standard" data-fillout-inherit-parameters data-fillout-dynamic-resize></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16">
+            <div class="container mx-auto px-6">
+                <div class="card-style rounded-2xl p-8 md:p-12 text-center max-w-3xl mx-auto fade-up">
+                    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+                        Prefer to talk to a <span class="gradient-text">human</span>?
+                    </h3>
+                    <p class="text-slate-700 mb-6">
+                        Our team is standing by to answer your questions and show you how sales-rep.ai can transform your business.
+                    </p>
+                    <a href="tel:+18005551234" class="inline-block gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-8 rounded-lg text-lg">
+                        Schedule a Call
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="relative overflow-hidden border-t border-slate-200/50 pt-12 mt-12">
+        <div class="relative z-10 container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-900 tracking-tight">
+                    sales-rep<span class="gradient-text font-bold">.ai</span>
+                </h2>
+                <p class="text-slate-600 mt-4 md:mt-0">&copy; 2024 sales-rep.ai. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-slate-500 hover:text-blue-500 transition-colors">
+                        <i data-lucide="twitter"></i>
+                    </a>
+                    <a href="#" class="text-slate-500 hover:text-blue-500 transition-colors">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <a href="#" class="text-slate-500 hover:text-blue-500 transition-colors">
+                        <i data-lucide="github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://server.fillout.com/embed/v1/"></script>
+    <script>
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Starfield Canvas Animation
+            const canvas = document.getElementById('starfield');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+
+                const resizeCanvas = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+
+                const stars = [];
+                const numStars = 300;
+                for (let i = 0; i < numStars; i++) {
+                    stars.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        radius: Math.random() * 1.0 + 0.3,
+                        alpha: Math.random() * 0.7,
+                        velocity: {
+                            y: Math.random() * 0.1 + 0.05
+                        }
+                    });
+                }
+                
+                const shootingStars = [];
+
+                const createShootingStar = () => {
+                    if (Math.random() < 0.01 && shootingStars.length < 2) { 
+                        shootingStars.push({
+                            x: Math.random() * canvas.width * 0.8 + canvas.width * 0.1, 
+                            y: Math.random() * canvas.height * 0.2, 
+                            len: Math.random() * 50 + 20,
+                            speed: Math.random() * 6 + 5,
+                            angle: Math.PI / 4.5,
+                            opacity: 0.8
+                        });
+                    }
+                }
+
+                const animate = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    stars.forEach(star => {
+                        star.y += star.velocity.y;
+                        if (star.y > canvas.height + star.radius) {
+                            star.x = Math.random() * canvas.width;
+                            star.y = -star.radius;
+                        }
+
+                        star.alpha += (Math.random() - 0.5) * 0.08;
+                        star.alpha = Math.max(0.1, Math.min(0.7, star.alpha));
+
+                        ctx.beginPath();
+                        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(107, 114, 128, ${star.alpha * 0.5})`;
+                        ctx.fill();
+                    });
+                    
+                    createShootingStar();
+                    shootingStars.forEach((ss, index) => {
+                        ss.x += ss.speed * Math.cos(ss.angle);
+                        ss.y += ss.speed * Math.sin(ss.angle);
+                        ss.opacity -= 0.015;
+
+                        if (ss.opacity <= 0 || ss.x > canvas.width || ss.y > canvas.height) {
+                            shootingStars.splice(index, 1);
+                        } else {
+                             ctx.beginPath();
+                             const tailX = ss.x - ss.len * Math.cos(ss.angle);
+                             const tailY = ss.y - ss.len * Math.sin(ss.angle);
+                             ctx.moveTo(tailX, tailY);
+                             ctx.lineTo(ss.x, ss.y);
+
+                             const gradient = ctx.createLinearGradient(tailX, tailY, ss.x, ss.y);
+                             gradient.addColorStop(0, 'rgba(251, 191, 36, 0)');
+                             gradient.addColorStop(1, `rgba(251, 191, 36, ${ss.opacity})`);
+                             
+                             ctx.strokeStyle = gradient;
+                             ctx.lineWidth = 1.5;
+                             ctx.stroke();
+                        }
+                    });
+
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+
+            // Intersection Observer for fade-up animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            const elementsToFade = document.querySelectorAll('.fade-up');
+            elementsToFade.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+
+</html>

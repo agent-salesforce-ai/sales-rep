@@ -13,7 +13,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Clean, light background */
+            background-color: #f8fafc;
             color: #0F172A;
         }
 
@@ -24,17 +24,17 @@
         }
 
         .gradient-bg {
-             background: linear-gradient(to right, #2dd4bf, #3b82f6);
+            background: linear-gradient(to right, #2dd4bf, #3b82f6);
         }
 
         .cta-button {
             transition: all 0.3s ease;
-            box-shadow: 0px 4px 20px rgba(45, 212, 191, 0.4); /* Start with seafoam glow */
+            box-shadow: 0px 4px 20px rgba(45, 212, 191, 0.4);
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0px 8px 30px rgba(59, 130, 246, 0.4); /* End with blue glow */
+            box-shadow: 0px 8px 30px rgba(59, 130, 246, 0.4);
             opacity: 0.95;
         }
 
@@ -45,7 +45,7 @@
         }
 
         .feature-card:hover {
-            border-color: #3b82f6; /* Blue border on hover */
+            border-color: #3b82f6;
             transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
         }
@@ -53,11 +53,11 @@
         .testimonial-card {
             background: white;
             border: 1px solid #E2E8F0;
-            transition: all 0.3s ease; /* Added transition for smooth effect */
+            transition: all 0.3s ease;
         }
 
         .testimonial-card:hover {
-            border-color: #3b82f6; /* Blue border on hover */
+            border-color: #3b82f6;
             transform: translateY(-4px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
         }
@@ -134,30 +134,8 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 bg-slate-50 overflow-hidden">
-            <div class="container mx-auto px-6 text-center">
-                <div class="relative z-10">
-                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-slate-900">
-                        <span class="gradient-text">Close Deals While You Sleep</span>
-                    </h2>
-                    <p class="text-lg md:text-xl max-w-3xl mx-auto text-slate-600 mb-8">
-                        sales-rep.ai deploys a tireless, agentic AI sales representative that operates 24/7. It doesn't just chat—it strategizes, nurtures leads, and books qualified meetings, performing at a superhuman level to grow your revenue.
-                    </p>
-                    <div class="flex justify-center space-x-4">
-                        <a href="#contact" class="gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-8 rounded-lg text-lg">
-                            Request a Demo
-                        </a>
-                        <a href="#how-it-works" class="bg-white hover:bg-slate-100 text-slate-800 font-bold py-3 px-8 rounded-lg text-lg transition-colors border border-slate-200">
-                            Learn More
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Floating Integration Logos -->
-        <section class="py-16 night-sky relative overflow-hidden">
+        <!-- Hero Section with Evening Sky -->
+        <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 night-sky overflow-hidden">
             <!-- Stars Background -->
             <div class="absolute inset-0 overflow-hidden">
                 <div class="star star-small" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
@@ -202,12 +180,34 @@
                 <div class="star star-small" style="top: 66%; left: 70%; animation-delay: 2.5s;"></div>
             </div>
 
-            <div class="container mx-auto px-6 relative z-10">
+            <div class="container mx-auto px-6 text-center">
+                <div class="relative z-10">
+                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-white">
+                        <span class="gradient-text">Close Deals While You Sleep</span>
+                    </h2>
+                    <p class="text-lg md:text-xl max-w-3xl mx-auto text-blue-100 mb-8">
+                        sales-rep.ai deploys a tireless, agentic AI sales representative that operates 24/7. It doesn't just chat—it strategizes, nurtures leads, and books qualified meetings, performing at a superhuman level to grow your revenue.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#contact" class="gradient-bg cta-button text-white hover:text-slate-200 font-bold py-3 px-8 rounded-lg text-lg">
+                            Request a Demo
+                        </a>
+                        <a href="#how-it-works" class="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors border border-white/20 backdrop-blur-sm">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration Logos Section -->
+        <section class="py-16 bg-slate-50">
+            <div class="container mx-auto px-6">
                 <div class="text-center mb-8">
-                    <p class="text-blue-200 text-sm uppercase tracking-wider font-semibold">Integrates Seamlessly With</p>
+                    <p class="text-slate-600 text-sm uppercase tracking-wider font-semibold">Integrates Seamlessly With</p>
                 </div>
                 <div class="relative h-32 flex items-center justify-center">
-                    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-80 hover:opacity-100 transition-opacity duration-500">
+                    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-60 hover:opacity-100 transition-opacity duration-500">
                         <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="h-8 md:h-10 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0s;">
                         <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="h-8 md:h-10 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0.2s;">
                         <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/calendly.png?raw=true" alt="Calendly" class="h-8 md:h-10 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0.4s;">

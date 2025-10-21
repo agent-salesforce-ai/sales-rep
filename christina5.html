@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sales-rep.ai - Your 24/7 Agentic AI Sales Representative</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, 
+                #0f172a 0%,      /* Deep night blue */
+                #1e293b 15%,     /* Slightly lighter blue */
+                #4c1d95 35%,     /* Deep purple */
+                #7c3aed 55%,     /* Evening purple */
+                #a78bfa 75%,     /* Light purple */
+                #e9d5ff 90%,     /* Very light purple */
+                #fae8ff 100%     /* Pink-ish white */
+            );
+            background-attachment: fixed;
+            color: #0F172A;
+            min-height: 100vh;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #d946ef, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-bg {
+             background: linear-gradient(to right, #d946ef, #a855f7, #ec4899);
+        }
+
+        .cta-button {
+            transition: all 0.3s ease;
+            box-shadow: 0px 4px 20px rgba(217, 70, 239, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 8px 30px rgba(168, 85, 247, 0.5);
+            opacity: 0.95;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #a855f7;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(168 85 247 / 0.1), 0 8px 10px -6px rgb(168 85 247 / 0.1);
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            border-color: #a855f7;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgb(168 85 247 / 0.1), 0 8px 10px -6px rgb(168 85 247 / 0.1);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .floating-logo {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Animated stars */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .star {
+            position: fixed;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+            z-index: 1;
+        }
+
+        .star-small {
+            width: 1px;
+            height: 1px;
+        }
+
+        .star-medium {
+            width: 2px;
+            height: 2px;
+        }
+
+        .star-large {
+            width: 3px;
+            height: 3px;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Content needs to be above stars */
+        header, main, footer {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Stars container -->
+    <div id="stars-container" class="fixed inset-0 pointer-events-none"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white tracking-tight">sales-rep<span class="gradient-text font-bold">.ai</span></h1>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="#features" class="text-white hover:text-pink-300 transition-colors">Features</a>
+                <a href="#how-it-works" class="text-white hover:text-pink-300 transition-colors">How It Works</a>
+                <a href="#pricing" class="text-white hover:text-pink-300 transition-colors">Pricing</a>
+                <a href="#contact" class="gradient-bg text-white font-medium py-2 px-4 rounded-lg transition-all hover:shadow-lg">Login</a>
+            </nav>
+            <a href="#contact" class="md:hidden gradient-bg cta-button text-white font-bold py-2 px-4 rounded-lg">
+                Get Started
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+            <div class="container mx-auto px-6 text-center">
+                <div class="relative z-10">
+                    <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter mb-4 text-white">
+                        Close Deals While You Sleep
+                    </h2>
+                    <p class="text-lg md:text-xl max-w-3xl mx-auto text-purple-100 mb-8">
+                        sales-rep.ai deploys a tireless, agentic AI sales representative that operates 24/7. It doesn't just chat—it strategizes, nurtures leads, and books qualified meetings, performing at a superhuman level to grow your revenue.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#contact" class="gradient-bg cta-button text-white font-bold py-3 px-8 rounded-lg text-lg">
+                            Request a Demo
+                        </a>
+                        <a href="#how-it-works" class="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors border border-white/30">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Integration Logos -->
+        <section class="py-16 relative overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-8">
+                    <p class="text-purple-200 text-sm uppercase tracking-wider font-semibold">Integrates Seamlessly With</p>
+                </div>
+                <div class="relative h-32 flex items-center justify-center">
+                    <div class="flex flex-wrap justify-center items-center gap-4 md:gap-6 opacity-80 hover:opacity-100 transition-opacity duration-500">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aircall.png?raw=true" alt="Aircall" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/aqua.png?raw=true" alt="Aqua" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0.2s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/calendly.png?raw=true" alt="Calendly" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0.4s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/claude.png?raw=true" alt="Claude" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0.6s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gemini.png?raw=true" alt="Gemini" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 0.8s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/gsuite.png?raw=true" alt="Google Workspace" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 1s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/hubspot.png?raw=true" alt="HubSpot" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 1.2s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/justcall.png?raw=true" alt="JustCall" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 1.4s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/kixie.png?raw=true" alt="Kixie" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 1.6s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/office.png?raw=true" alt="Microsoft Office" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 1.8s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/openai.png?raw=true" alt="OpenAI" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 2s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/plaid.png?raw=true" alt="Plaid" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 2.2s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/salesforce.png?raw=true" alt="Salesforce" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 2.4s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/sutton.png?raw=true" alt="Sutton" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 2.6s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/whatsapp.png?raw=true" alt="WhatsApp" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 2.8s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zapier.png?raw=true" alt="Zapier" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 3s;">
+                        <img src="https://github.com/agent-salesforce-ai/sales-rep/blob/main/zoho.png?raw=true" alt="Zoho" class="h-4 md:h-5 transition-all duration-300 hover:scale-110 floating-logo" style="animation-delay: 3.2s;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white">Get Started in 3 Simple Steps</h3>
+                    <p class="text-purple-200 mt-2">Launch your AI sales force in minutes.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <div class="p-8">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4 mx-auto">
+                            <i data-lucide="plug-zap" class="text-pink-400 w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">1. Connect Your Data</h4>
+                        <p class="text-purple-200">Securely integrate your CRM, product catalogs, and sales playbooks. Our system learns your business inside and out.</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4 mx-auto">
+                            <i data-lucide="bot" class="text-pink-400 w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">2. Deploy Your AI Agent</h4>
+                        <p class="text-purple-200">Activate your AI sales rep. It instantly begins analyzing leads, initiating outreach, and engaging prospects 24/7.</p>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex items-center justify-center h-16 w-16 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-4 mx-auto">
+                           <i data-lucide="dollar-sign" class="text-pink-400 w-8 h-8"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-white mb-2">3. Agent Books Sales</h4>
+                        <p class="text-purple-200">The AI doesn't just book meetings, it can close deals. Watch your revenue grow as your agent converts leads into customers automatically.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white">Beyond Human Capabilities</h3>
+                    <p class="text-purple-200 mt-2">An AI sales rep that redefines performance.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature Card 1 -->
+                    <div class="feature-card rounded-xl p-6">
+                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 mb-4">
+                            <i data-lucide="clock" class="text-purple-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">24/7 Uninterrupted Operation</h4>
+                        <p class="text-slate-600">Never miss a lead again. Your AI agent works across all time zones, engaging prospects at the perfect moment, day or night.</p>
+                    </div>
+                    <!-- Feature Card 2 -->
+                    <div class="feature-card rounded-xl p-6">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 mb-4">
+                            <i data-lucide="brain-circuit" class="text-purple-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">Truly Agentic AI</h4>
+                        <p class="text-slate-600">This is not a chatbot. Our AI autonomously plans, reasons, and executes complex, multi-step sales strategies to nurture leads to conversion.</p>
+                    </div>
+                    <!-- Feature Card 3 -->
+                    <div class="feature-card rounded-xl p-6">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 mb-4">
+                            <i data-lucide="trending-up" class="text-purple-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">Incredible Performance</h4>
+                        <p class="text-slate-600">Dramatically increase your sales pipeline volume and conversion rates. Our AI is trained on vast datasets of successful sales interactions.</p>
+                    </div>
+                     <!-- Feature Card 4 -->
+                     <div class="feature-card rounded-xl p-6">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 mb-4">
+                            <i data-lucide="database-zap" class="text-purple-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">Seamless CRM Integration</h4>
+                        <p class="text-slate-600">Natively connects with Salesforce, HubSpot, and other major CRMs. Your data stays synced, and insights are automatically logged.</p>
+                    </div>
+                     <!-- Feature Card 5 -->
+                     <div class="feature-card rounded-xl p-6">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 mb-4">
+                            <i data-lucide="bar-chart-3" class="text-purple-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">Real-time Analytics</h4>
+                        <p class="text-slate-600">Monitor your AI's performance through an intuitive dashboard. Track outreach, engagement, and meetings booked with full transparency.</p>
+                    </div>
+                     <!-- Feature Card 6 -->
+                     <div class="feature-card rounded-xl p-6">
+                         <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 mb-4">
+                            <i data-lucide="shield-check" class="text-purple-600 w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">Enterprise-Grade Security</h4>
+                        <p class="text-slate-600">Your data is protected with industry-leading security protocols. We are SOC 2 Type II compliant and GDPR ready.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white">Trusted by High-Growth Companies</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div class="testimonial-card rounded-xl p-8">
+                        <p class="text-slate-600 mb-4">"sales-rep.ai quadrupled our qualified leads in the first month. It's like having a team of ten superhuman SDRs working around the clock. Game-changing."</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/e2e8f0/475569?text=JS" alt="John Stanwick">
+                            <div>
+                                <p class="font-semibold text-slate-900">John Stanwick</p>
+                                <p class="text-purple-600 font-medium">CEO, QuantumLeap SaaS</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card rounded-xl p-8">
+                         <p class="text-slate-600 mb-4">"The setup was unbelievably easy, and the ROI was almost immediate. Our sales team is happier and more effective, focusing only on closing deals."</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/e2e8f0/475569?text=AM" alt="Aisha Moreno">
+                            <div>
+                                <p class="font-semibold text-slate-900">Aisha Moreno</p>
+                                <p class="text-purple-600 font-medium">VP of Sales, Innovate Dynamics</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card rounded-xl p-8">
+                         <p class="text-slate-600 mb-4">"We've seen a 300% increase in booked meetings. The analytics dashboard is incredibly insightful and helps us fine-tune our entire sales process."</p>
+                        <div class="flex items-center">
+                            <img class="w-12 h-12 rounded-full mr-4" src="https://placehold.co/100x100/e2e8f0/475569?text=CL" alt="Chen Lin">
+                            <div>
+                                <p class="font-semibold text-slate-900">Chen Lin</p>
+                                <p class="text-purple-600 font-medium">Head of Growth, Apex Solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="text-3xl md:text-4xl font-bold text-white">Built for Enterprise</h3>
+                    <p class="text-purple-200 mt-2">A plan designed for large-scale, custom deployments.</p>
+                </div>
+                <div class="flex justify-center">
+                    <!-- Enterprise Pricing Card -->
+                    <div class="feature-card rounded-xl p-8 flex flex-col h-full w-full max-w-md">
+                        <h4 class="text-xl font-semibold text-slate-900 mb-2">Enterprise</h4>
+                        <p class="text-slate-600 mb-4">For large-scale, custom deployments.</p>
+                        <p class="text-4xl font-bold text-slate-900 mb-6">Let's Talk</p>
+                        <ul class="space-y-3 text-slate-600 flex-grow">
+                             <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-purple-500 mr-2"></i>Unlimited Scale & Usage</li>
+                             <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-purple-500 mr-2"></i>Custom Integrations & Setup</li>
+                             <li class="flex items-center"><i data-lucide="check" class="w-5 h-5 text-purple-500 mr-2"></i>Dedicated Strategic Support</li>
+                        </ul>
+                        <a href="#contact" class="mt-8 w-full text-center gradient-bg cta-button text-white font-bold py-3 px-6 rounded-lg">Meet With Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white/5 backdrop-blur-sm border-t border-white/10">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                 <h2 class="text-xl font-bold text-white tracking-tight">sales-rep<span class="gradient-text font-bold">.ai</span></h2>
+                 <p class="text-purple-200 mt-4 md:mt-0">&copy; 2024 sales-rep.ai. All rights reserved.</p>
+                 <div class="flex space-x-4 mt-4 md:mt-0">
+                     <a href="#" class="text-purple-200 hover:text-pink-300"><i data-lucide="twitter"></i></a>
+                     <a href="#" class="text-purple-200 hover:text-pink-300"><i data-lucide="linkedin"></i></a>
+                     <a href="#" class="text-purple-200 hover:text-pink-300"><i data-lucide="github"></i></a>
+                 </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        lucide.createIcons();
+        
+        // Generate stars across entire page
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 200;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            
+            // Random size
+            const sizes = ['star-small', 'star-small', 'star-small', 'star-medium', 'star-large'];
+            star.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+            
+            // Random position across entire viewport
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            
+            // Random animation delay for twinkling
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.animationDuration = (2 + Math.random() * 3) + 's';
+            
+            starsContainer.appendChild(star);
+        }
+    </script>
+</body>
+
+</html>

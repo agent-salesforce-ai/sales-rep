@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sutton Funding - Submission Tool</title>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="styles.css">
+  </head>
+<body>
+      <header class="header">
+                <div class="header-content">
+                              <div class="logo">
+                                                <img src="https://suttonfunding.com/img/white-sutton-logo.png" alt="Sutton Funding">
+                              </div>div>
+                              <h1>Submission Tool</h1>
+                </div>div>
+      </header>header>
+
+    <main class="container">
+            <section class="section">
+                        <h2>Deal Information</h2>
+                        <div class="form-group">
+                                        <label for="subject">Subject</label>label>
+                                        <input type="text" id="subject" class="form-control" readonly>
+                        </div>div>
+                        <div class="form-group">
+                                        <label for="notes">Notes</label>label>
+                                        <textarea id="notes" class="form-control" rows="4" placeholder="Add any notes for the lenders..."></textarea>
+                        </div>div>
+            </section>section>
+    
+            <section class="section">
+                        <h2>Select Application Files</h2>
+                        <p class="info-text">The total attachments size should be no more than 10 MB</p>p>
+                        
+                        <h3>Existing Attachments</h3>
+                        <ul id="existing-attachments" class="attachment-list"></ul>ul>
+                        <div class="total-size">Total Size: <span id="existing-total">0.00</span>span> MB</div>div>
+            
+                        <h3>New Attachments</h3>
+                        <p class="info-text">File format must be .JPG, .JPEG, .PNG, .GIF, .PDF, .DOC. Max size: 5MB.</p>p>
+                        <div class="dropzone" id="dropzone">
+                                        <div class="dropzone-content">
+                                                            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                                                                    <polyline points="17 8 12 3 7 8"/>
+                                                                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                                            </svg>svg>
+                                                            <p>Drop your file(s) here or <span class="browse-link">click to browse</span>span></p>
+                                        </div>div>
+                                        <input type="file" id="file-input" multiple accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx" hidden>
+                        </div>div>
+                        <ul id="new-attachments" class="attachment-list"></ul>ul>
+                        <div class="total-size">Total Size: <span id="new-total">0.00</span>span> MB</div>div>
+            </section>section>
+    
+            <section class="section">
+                        <h2>Select Lenders</h2>
+                        <div class="lender-header">
+                                        <div class="select-all">
+                                                            <input type="checkbox" id="select-all-lenders">
+                                                            <label for="select-all-lenders">Select All Qualified</label>label>
+                                        </div>div>
+                                        <input type="search" id="lender-search" class="form-control search-input" placeholder="Search for Lenders">
+                        </div>div>
+                        
+                        <div class="table-container">
+                                        <table class="lender-table" id="lender-table">
+                                                            <thead>
+                                                                                      <tr>
+                                                                                                                    <th class="checkbox-col"></th>th>
+                                                                                                                    <th>Lender</th>
+                                                                                        <th>Min TIB</th>
+                                                                                        <th>Min Credit</th>
+                                                                                        <th>Max NSF</th>
+                                                                                        <th>Min ADB</th>
+                                                                                        <th>Min Own %</th>
+                                                                                        <th>Min Deposits</th>
+                                                                                        <th>Industry</th>
+                                                                                        <th>State</th>
+                                                                                      </tr>
+                                                            </thead>
+                                                            <tbody id="lender-tbody"></tbody>tbody>
+                                        </table>table>
+                        </div>div>
+            </section>section>
+    
+            <section class="section">
+                        <h2>CC</h2>
+                        <div class="cc-container">
+                                        <div id="cc-tags" class="cc-tags"></div>div>
+                                        <input type="email" id="cc-input" class="form-control" placeholder="Add CC emails (press Enter)">
+                        </div>div>
+            </section>section>
+    
+            <div class="submit-container">
+                        <button id="submit-btn" class="btn-submit">Submit</button>button>
+            </div>div>
+    </main>main>
+
+    <footer class="footer">
+            <p>&copy; 2025 Sutton Funding - All Rights Reserved.</p>
+    </footer>footer>
+
+    <div id="loading" class="loading-overlay" style="display:none;">
+            <div class="spinner"></div>div>
+            <p>Loading...</p>
+    </div>div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>html></p></p></th></th>
+                                                                                      </tr>
+                                                            </thead></p></h2></h1>
+</body></title>
+  </head>

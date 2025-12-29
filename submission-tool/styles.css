@@ -1,0 +1,249 @@
+:root {
+      --primary: #1a73e8;
+      --primary-hover: #1557b0;
+      --success: #34a853;
+      --danger: #ea4335;
+      --text: #202124;
+      --text-light: #5f6368;
+      --border: #dadce0;
+      --bg: #f8f9fa;
+      --white: #fff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+}
+
+.header {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                  url('https://suttonfunding.com/img/background-image.jpg') center/cover;
+      color: var(--white);
+      padding: 20px 40px;
+}
+
+.header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+}
+
+.logo img { height: 50px; }
+.header h1 { font-size: 28px; font-weight: 400; }
+
+.container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+}
+
+.section {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+}
+
+.section h2 { font-size: 20px; margin-bottom: 20px; }
+.section h3 { font-size: 16px; margin: 20px 0 12px; color: var(--text-light); }
+
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-light); }
+
+.form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+}
+
+.form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.1);
+}
+
+.info-text { color: var(--text-light); font-size: 13px; margin-bottom: 12px; }
+
+.attachment-list {
+      list-style: none;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      max-height: 300px;
+      overflow-y: auto;
+}
+
+.attachment-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+}
+
+.attachment-list li:last-child { border-bottom: none; }
+.attachment-list li:hover { background: var(--bg); }
+
+.remove-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 50%;
+}
+
+.total-size {
+      text-align: center;
+      padding: 12px;
+      font-size: 14px;
+      color: var(--text-light);
+}
+
+.dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 16px;
+}
+
+.dropzone:hover, .dropzone.dragover {
+      border-color: var(--primary);
+      background: rgba(26, 115, 232, 0.05);
+}
+
+.upload-icon { width: 48px; height: 48px; color: var(--primary); margin-bottom: 12px; }
+.browse-link { color: var(--primary); text-decoration: underline; }
+
+.lender-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 16px;
+}
+
+.select-all { display: flex; align-items: center; gap: 8px; }
+.search-input { max-width: 300px; }
+
+.table-container { overflow-x: auto; }
+
+.lender-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+}
+
+.lender-table th, .lender-table td {
+      padding: 12px 8px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+}
+
+.lender-table th {
+      background: var(--bg);
+      font-weight: 600;
+      color: var(--text-light);
+      white-space: nowrap;
+}
+
+.lender-table tbody tr:hover { background: var(--bg); }
+.lender-table tbody tr.selected { background: rgba(26, 115, 232, 0.08); }
+
+.status-pass, .status-fail {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      color: white;
+}
+
+.status-pass { background: var(--success); }
+.status-fail { background: var(--danger); }
+.status-pass svg, .status-fail svg { width: 14px; height: 14px; }
+
+.cc-container { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.cc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.cc-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg);
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 13px;
+}
+
+.cc-tag button { background: none; border: none; cursor: pointer; color: var(--text-light); }
+#cc-input { flex: 1; min-width: 200px; }
+
+.submit-container { text-align: center; margin: 30px 0; }
+
+.btn-submit {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 16px 80px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+}
+
+.btn-submit:hover { background: var(--primary-hover); }
+.btn-submit:disabled { background: var(--border); cursor: not-allowed; }
+
+.footer {
+      background: #1a1a1a;
+      color: var(--text-light);
+      text-align: center;
+      padding: 20px;
+      font-size: 13px;
+}
+
+.loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      z-index: 1000;
+}
+
+.spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 768px) {
+      .header-content { flex-direction: column; gap: 12px; text-align: center; }
+      .lender-header { flex-direction: column; align-items: stretch; }
+      .search-input { max-width: 100%; }
+}
